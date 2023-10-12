@@ -1,0 +1,6 @@
+framework module Pods_BootCamp_BootCampUITests {
+  umbrella header "Pods-BootCamp-BootCampUITests-umbrella.h"
+
+  export *
+  module * { export * }
+}

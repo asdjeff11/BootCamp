@@ -1,0 +1,440 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bucket
+   uuid = "9D1894E6-0492-421B-B9EE-40ACFAFA4D62"
+   type = "0"
+   version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "E6EA0D76-DD95-4846-B4EE-3D3F30D7176C"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "BootCamp/Theme.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "12"
+            endingLineNumber = "12"
+            landmarkName = "ThemeStyle"
+            landmarkType = "13">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "4D9CB8F0-E3A1-4881-98E1-DF91296B12CE"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "BootCamp/Search/SearchViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "109"
+            endingLineNumber = "109"
+            landmarkName = "readMoreClick(_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "2D02793D-F188-4732-8171-1E3E4F86D2B5"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "BootCamp/Search/SearchViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "118"
+            endingLineNumber = "118"
+            landmarkName = "collectClick(_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "A63530E9-0C33-4A32-BAB3-E7ACF0E83CE9"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "BootCamp/Search/SearchViewModel.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "60"
+            endingLineNumber = "60"
+            landmarkName = "fetchURLData(url_Str:finishCallBack:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "A63530E9-0C33-4A32-BAB3-E7ACF0E83CE9 - f441089d83a4cc70"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "BootCamp.SearchViewModel.fetch(_: Swift.String, callBack: (Swift.String) -&gt; ()) -&gt; ()"
+                  moduleName = "BootCamp"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/esb23904/Desktop/BootCamp/BootCamp/Search/SearchViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "62"
+                  endingLineNumber = "62"
+                  offsetFromSymbolStart = "1861">
+               </Location>
+               <Location
+                  uuid = "A63530E9-0C33-4A32-BAB3-E7ACF0E83CE9 - 42952836ff4c5690"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Alamofire.DataResponse&lt;&#x3c4;_0_0, Alamofire.AFError&gt;) -&gt; () in BootCamp.SearchViewModel.fetchURLData&lt;&#x3c4;_0_0 where &#x3c4;_0_0: Swift.Decodable, &#x3c4;_0_0: Swift.Encodable&gt;(url_Str: Swift.String, finishCallBack: (Swift.Result&lt;&#x3c4;_0_0, Swift.Error&gt;) -&gt; ()) -&gt; ()"
+                  moduleName = "BootCamp"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/esb23904/Desktop/BootCamp/BootCamp/Search/SearchViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "60"
+                  endingLineNumber = "60"
+                  offsetFromSymbolStart = "440">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "A24770C8-70F2-48E3-9BD5-17E1C311EFA7"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "BootCamp/Search/SearchViewModel.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "59"
+            endingLineNumber = "59"
+            landmarkName = "fetchURLData(url_Str:finishCallBack:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "E86E83C1-AD30-493F-8D10-439C88CFF970"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "BootCamp/Search/SearchViewModel.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "30"
+            endingLineNumber = "30"
+            landmarkName = "fetch(_:callBack:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "E86E83C1-AD30-493F-8D10-439C88CFF970 - 53e59d225a4721d7"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Result&lt;BootCamp.ITuneResult, Swift.Error&gt;) -&gt; () in closure #1 @Sendable () -&gt; () in BootCamp.SearchViewModel.fetch(_: Swift.String, callBack: (Swift.String) -&gt; ()) -&gt; ()"
+                  moduleName = "BootCamp"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/esb23904/Desktop/BootCamp/BootCamp/Search/SearchViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "31"
+                  endingLineNumber = "31"
+                  offsetFromSymbolStart = "207">
+               </Location>
+               <Location
+                  uuid = "E86E83C1-AD30-493F-8D10-439C88CFF970 - 53e59d225a4721d7"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Result&lt;BootCamp.ITuneResult, Swift.Error&gt;) -&gt; () in closure #1 @Sendable () -&gt; () in BootCamp.SearchViewModel.fetch(_: Swift.String, callBack: (Swift.String) -&gt; ()) -&gt; ()"
+                  moduleName = "BootCamp"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/esb23904/Desktop/BootCamp/BootCamp/Search/SearchViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "31"
+                  endingLineNumber = "31"
+                  offsetFromSymbolStart = "263">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "50886A12-2561-4D09-A573-A61707BB5E73"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "BootCamp/Search/SearchViewModel.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "43"
+            endingLineNumber = "43"
+            landmarkName = "fetch(_:callBack:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "50886A12-2561-4D09-A573-A61707BB5E73 - b36703247f9e765a"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #2 (Swift.Result&lt;BootCamp.ITuneResult, Swift.Error&gt;) -&gt; () in closure #1 @Sendable () -&gt; () in BootCamp.SearchViewModel.fetch(_: Swift.String, callBack: (Swift.String) -&gt; ()) -&gt; ()"
+                  moduleName = "BootCamp"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/esb23904/Desktop/BootCamp/BootCamp/Search/SearchViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "43"
+                  endingLineNumber = "43"
+                  offsetFromSymbolStart = "207">
+               </Location>
+               <Location
+                  uuid = "50886A12-2561-4D09-A573-A61707BB5E73 - b36703247f9e765a"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #2 (Swift.Result&lt;BootCamp.ITuneResult, Swift.Error&gt;) -&gt; () in closure #1 @Sendable () -&gt; () in BootCamp.SearchViewModel.fetch(_: Swift.String, callBack: (Swift.String) -&gt; ()) -&gt; ()"
+                  moduleName = "BootCamp"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/esb23904/Desktop/BootCamp/BootCamp/Search/SearchViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "43"
+                  endingLineNumber = "43"
+                  offsetFromSymbolStart = "263">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "558AC701-9863-4E15-9466-C6DF803362D6"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "BootCamp/Search/SearchViewModel.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "42"
+            endingLineNumber = "42"
+            landmarkName = "fetch(_:callBack:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "558AC701-9863-4E15-9466-C6DF803362D6 - b36703247f9e765a"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #2 (Swift.Result&lt;BootCamp.ITuneResult, Swift.Error&gt;) -&gt; () in closure #1 @Sendable () -&gt; () in BootCamp.SearchViewModel.fetch(_: Swift.String, callBack: (Swift.String) -&gt; ()) -&gt; ()"
+                  moduleName = "BootCamp"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/esb23904/Desktop/BootCamp/BootCamp/Search/SearchViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "43"
+                  endingLineNumber = "43"
+                  offsetFromSymbolStart = "207">
+               </Location>
+               <Location
+                  uuid = "558AC701-9863-4E15-9466-C6DF803362D6 - b36703247f9e765a"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #2 (Swift.Result&lt;BootCamp.ITuneResult, Swift.Error&gt;) -&gt; () in closure #1 @Sendable () -&gt; () in BootCamp.SearchViewModel.fetch(_: Swift.String, callBack: (Swift.String) -&gt; ()) -&gt; ()"
+                  moduleName = "BootCamp"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/esb23904/Desktop/BootCamp/BootCamp/Search/SearchViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "43"
+                  endingLineNumber = "43"
+                  offsetFromSymbolStart = "263">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "30C3FC7D-4A0C-448C-A92D-4C8824BC0684"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "BootCamp/Search/SearchViewModel.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "32"
+            endingLineNumber = "32"
+            landmarkName = "fetch(_:callBack:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "30C3FC7D-4A0C-448C-A92D-4C8824BC0684 - 53e59d225a472136"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Result&lt;BootCamp.ITuneResult, Swift.Error&gt;) -&gt; () in closure #1 @Sendable () -&gt; () in BootCamp.SearchViewModel.fetch(_: Swift.String, callBack: (Swift.String) -&gt; ()) -&gt; ()"
+                  moduleName = "BootCamp"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/esb23904/Desktop/BootCamp/BootCamp/Search/SearchViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "32"
+                  endingLineNumber = "32"
+                  offsetFromSymbolStart = "313">
+               </Location>
+               <Location
+                  uuid = "30C3FC7D-4A0C-448C-A92D-4C8824BC0684 - 5755178ac159e738"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (BootCamp.ITuneDataDetail) -&gt; BootCamp.SearchModel in closure #1 (Swift.Result&lt;BootCamp.ITuneResult, Swift.Error&gt;) -&gt; () in closure #1 @Sendable () -&gt; () in BootCamp.SearchViewModel.fetch(_: Swift.String, callBack: (Swift.String) -&gt; ()) -&gt; ()"
+                  moduleName = "BootCamp"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/esb23904/Desktop/BootCamp/BootCamp/Search/SearchViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "32"
+                  endingLineNumber = "32"
+                  offsetFromSymbolStart = "59">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "21D3A9BC-1122-4F11-A475-FE62BFE27324"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "BootCamp/Search/SearchViewModel.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "29"
+            endingLineNumber = "29"
+            landmarkName = "fetch(_:callBack:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "21D3A9BC-1122-4F11-A475-FE62BFE27324 - 7ee0020071b8a40d"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 @Sendable () -&gt; () in BootCamp.SearchViewModel.fetch(_: Swift.String, callBack: (Swift.String) -&gt; ()) -&gt; ()"
+                  moduleName = "BootCamp"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/esb23904/Desktop/BootCamp/BootCamp/Search/SearchViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "29"
+                  endingLineNumber = "29"
+                  offsetFromSymbolStart = "549">
+               </Location>
+               <Location
+                  uuid = "21D3A9BC-1122-4F11-A475-FE62BFE27324 - 53e59d225a47222e"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Result&lt;BootCamp.ITuneResult, Swift.Error&gt;) -&gt; () in closure #1 @Sendable () -&gt; () in BootCamp.SearchViewModel.fetch(_: Swift.String, callBack: (Swift.String) -&gt; ()) -&gt; ()"
+                  moduleName = "BootCamp"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/esb23904/Desktop/BootCamp/BootCamp/Search/SearchViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "24"
+                  endingLineNumber = "24"
+                  offsetFromSymbolStart = "138">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "EDD56B13-EE8A-4678-B55C-4568F4C62565"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "BootCamp/Search/SearchViewModel.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "31"
+            endingLineNumber = "31"
+            landmarkName = "fetch(_:callBack:)"
+            landmarkType = "7">
+            <Locations>
+               <Location
+                  uuid = "EDD56B13-EE8A-4678-B55C-4568F4C62565 - 53e59d225a4721d7"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Result&lt;BootCamp.ITuneResult, Swift.Error&gt;) -&gt; () in closure #1 @Sendable () -&gt; () in BootCamp.SearchViewModel.fetch(_: Swift.String, callBack: (Swift.String) -&gt; ()) -&gt; ()"
+                  moduleName = "BootCamp"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/esb23904/Desktop/BootCamp/BootCamp/Search/SearchViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "31"
+                  endingLineNumber = "31"
+                  offsetFromSymbolStart = "207">
+               </Location>
+               <Location
+                  uuid = "EDD56B13-EE8A-4678-B55C-4568F4C62565 - 53e59d225a4721d7"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "closure #1 (Swift.Result&lt;BootCamp.ITuneResult, Swift.Error&gt;) -&gt; () in closure #1 @Sendable () -&gt; () in BootCamp.SearchViewModel.fetch(_: Swift.String, callBack: (Swift.String) -&gt; ()) -&gt; ()"
+                  moduleName = "BootCamp"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/esb23904/Desktop/BootCamp/BootCamp/Search/SearchViewModel.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "31"
+                  endingLineNumber = "31"
+                  offsetFromSymbolStart = "263">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "EF6908A7-71CE-4F0A-8B40-892CC62E86DD"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "BootCamp/Search/SearchViewModel.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "33"
+            endingLineNumber = "33"
+            landmarkName = "fetch(_:callBack:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "6A78B2E0-1AF0-4447-8B61-B66D3A3AB76F"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "BootCamp/Search/SearchViewModel.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "34"
+            endingLineNumber = "34"
+            landmarkName = "fetch(_:callBack:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
+</Bucket>

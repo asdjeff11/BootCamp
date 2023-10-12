@@ -1,0 +1,6 @@
+framework module Pods_BootCamp {
+  umbrella header "Pods-BootCamp-umbrella.h"
+
+  export *
+  module * { export * }
+}
