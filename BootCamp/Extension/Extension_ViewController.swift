@@ -11,7 +11,7 @@ import UIKit
 extension UIViewController {
     
     
-    func setUpNav(title:String,backButtonVisit:Bool = false) {
+    func setUpNavigation(title:String,backButtonVisit:Bool = false) {
         self.title = title
         
         let textColor:UIColor = Theme.themeStlye.getTextColor()
@@ -45,10 +45,10 @@ extension UIViewController {
         
         let backButton = UIButton(frame: Theme.navigationBtnSize)
         let img = UIImage.scaleImage(image: UIImage(named: "back")!, newSize: Theme.navigationBtnSize.size)
-        img.withTintColor(.white)
-        backButton.tintColor = .white
+            .withRenderingMode(.alwaysTemplate)
+        backButton.tintColor = textColor
         backButton.setImage(img, for: .normal)
-        backButton.addTarget(self, action: #selector(leftBtnAct), for: .touchUpInside)
+        backButton.addTarget(self, action: #selector(leftButtonAction), for: .touchUpInside)
        
         
         var array:[UIBarButtonItem] = []
@@ -66,8 +66,7 @@ extension UIViewController {
         
     }
     
-    
-    @objc func leftBtnAct() {
+    @objc func leftButtonAction() {
         viewWillTerminate()
         _ = navigationController?.popViewController(animated: true)
     }

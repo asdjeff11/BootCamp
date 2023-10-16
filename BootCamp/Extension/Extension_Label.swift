@@ -8,10 +8,13 @@
 import Foundation
 import UIKit
 extension UILabel {
-    static func createLabel(size:CGFloat,color:UIColor,alignment:NSTextAlignment? = nil,alpha:CGFloat? = nil,text:String = "")->UILabel {
+    static func createLabel(size:CGFloat,color:UIColor? = nil,alignment:NSTextAlignment? = nil,alpha:CGFloat? = nil,text:String = "")->UILabel {
         let label = UILabel()
         label.font = Theme.labelFont.withSize(size)
-        label.textColor = color
+        if let color = color {
+            label.textColor = color
+        }
+        
         if ( text != "") {
             label.text = text
         }

@@ -10,7 +10,7 @@ import UIKit
 
 class PersonalDataViewController:CustomViewController {
     lazy var themeView:PersonalSettingButton = {
-        let myView = PersonalSettingButton(title: "主題顏色", content: Theme.themeStlye.getThemeString())
+        let myView = PersonalSettingButton(title: "主題顏色", content: Theme.themeStlye.rawValue)
         return myView
     }()
     
@@ -51,8 +51,28 @@ class PersonalDataViewController:CustomViewController {
 
 extension PersonalDataViewController {
     func setUp() {
-        setUpNav(title: "個人資料")
+        setUpNavigation(title: "個人資料")
+        let themeViewGesture = UITapGestureRecognizer(target: self, action:  #selector(themeViewIsClick))
+        themeView.addGestureRecognizer(themeViewGesture)
+        
+        let collectItemGesture = UITapGestureRecognizer(target: self, action:  #selector(collectViewIsClick))
+        collectItemView.addGestureRecognizer(collectItemGesture)
+        
+        //collectItemView.addGestureRecognizer(viewGesture)
     }
+    
+    @objc func themeViewIsClick() {
+        let changeThemeViewController = ChangeThemeViewController()
+        changeThemeViewController.view.backgroundColor = Theme.themeStlye.getBackColor()
+        navigationController?.pushViewController(changeThemeViewController, animated: true)
+    }
+    
+    @objc func collectViewIsClick() {
+        let collectItemViewController = CollectItemViewController()
+        collectItemViewController.view.backgroundColor = Theme.themeStlye.getBackColor()
+        navigationController?.pushViewController(collectItemViewController, animated: true)
+    }
+    
     
     func layout() {
         let margins = view.layoutMarginsGuide
@@ -78,7 +98,7 @@ extension PersonalDataViewController {
 extension PersonalDataViewController {
     @objc func goAppleITunes() {
         let detailViewController = ITuneDetailViewController()
-        detailViewController.url_str = "https://www.apple.com/tw/itunes/"
+        detailViewController.url_string = "https://www.apple.com/tw/itunes/"
         navigationController?.pushViewController(detailViewController, animated: true)
     }
 }
