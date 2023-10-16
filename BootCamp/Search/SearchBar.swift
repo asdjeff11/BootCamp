@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 
 protocol SearchBarDelegate:AnyObject {
-    func searchAct(_ input:String)
+    func searchAction(_ input:String)
 }
 class SearchBar:UIView {
     weak var delegate:SearchBarDelegate?
@@ -18,6 +18,7 @@ class SearchBar:UIView {
     
     init() {
         textField = MyTextField()
+        textField.backgroundColor = .clear
         textField.placeholder = "搜尋"
         button = UIButton()
         super.init(frame: .zero)
@@ -48,7 +49,7 @@ class SearchBar:UIView {
         // set textField
         textField.layer.borderColor = textColor.cgColor
         textField.layer.borderWidth = 1
-        textField.backgroundColor = backColor
+        textField.textColor = textColor
         
         let img = UIImage.scaleImage(image: #imageLiteral(resourceName: "search.png"), newSize: CGSize(width: 70 * Theme.factor, height: 70 * Theme.factor))
         let buttonImg = img.withRenderingMode(.alwaysTemplate)
@@ -62,7 +63,7 @@ class SearchBar:UIView {
     
     @objc func clickAct() {
         let keyword = textField.text ?? ""
-        delegate?.searchAct(keyword)
+        delegate?.searchAction(keyword)
     }
     
     

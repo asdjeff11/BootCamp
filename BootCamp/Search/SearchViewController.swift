@@ -7,11 +7,16 @@
 
 import Foundation
 import UIKit
-
 class SearchViewController:CustomViewController {
+    enum MediaType:Int {
+        case 電影 = 0
+        case 音樂
+    }
+    
     let searchBar = SearchBar()
     let tableView = UITableView()
     let viewModel = SearchViewModel()
+    var isLoading = false
     override func viewDidLoad() {
         super.viewDidLoad()
         setUp()
@@ -20,17 +25,24 @@ class SearchViewController:CustomViewController {
     
     func setUp() {
         view.layer.contents = UIColor.white
-        setUpNav(title: "ITune")
+        setUpNavigation(title: "ITune")
         searchBar.delegate = self
         
         tableView.showsVerticalScrollIndicator = false
         tableView.layer.borderColor = Theme.themeStlye.getTextColor().cgColor
         tableView.layer.borderWidth = 1
-        tableView.backgroundColor = Theme.themeStlye.getBackColor()
+        tableView.backgroundColor = .clear
         tableView.separatorStyle = .none
         tableView.register(SearchCell.self, forCellReuseIdentifier: "SearchCell")
         tableView.delegate = self
         tableView.dataSource = self
+        
+        let tapG = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        view.addGestureRecognizer(tapG)
+        
+    }
+    @objc func dismissKeyboard() {
+        view.endEditing(true)
     }
     
     func layout() {
@@ -53,7 +65,6 @@ class SearchViewController:CustomViewController {
     override func setThemeColor() {
         super.setThemeColor()
         searchBar.updateTheme()
-        tableView.backgroundColor = Theme.themeStlye.getBackColor()
         tableView.layer.borderColor = Theme.themeStlye.getTextColor().cgColor
         tableView.reloadData()
     }
@@ -69,8 +80,6 @@ extension SearchViewController:UITableViewDelegate, UITableViewDataSource {
         return section == 0 ? viewModel.getMovieSize() : viewModel.getMusicSize()
     }
     
-    
-    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
     }
@@ -81,8 +90,8 @@ extension SearchViewController:UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerView = UIView()
-        headerView.backgroundColor = Theme.themeStlye.getBackColor()
-        let title = section == 0 ? "電影" : "音樂"
+        headerView.backgroundColor = .white
+        let title = ( section == MediaType.電影.rawValue ) ? "電影" : "音樂"
         let titleLabel = UILabel.createLabel(size: 40 * Theme.factor, color: .black, text: title)
         headerView.addSubview(titleLabel)
         NSLayoutConstraint.useAndActivateConstraints(constraints: [
@@ -97,12 +106,12 @@ extension SearchViewController:UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "SearchCell") as? SearchCell else { return UITableViewCell() }
         let item = viewModel.getData(indexPath: indexPath)
-        cell.IsMovie = ( indexPath.section == 0 )
+        cell.IsMovie = ( indexPath.section == MediaType.電影.rawValue )
         cell.setData(searchModel: item)
         cell.readMoreButton.addTarget(self, action: #selector(readMoreClick(_:)), for: .touchUpInside)
         cell.collectButton.addTarget(self, action: #selector(collectClick(_:)), for: .touchUpInside)
+        cell.setThemeColor()
         return cell
-        
     }
     
     @objc func readMoreClick(_ sender:UIButton ) {
@@ -124,11 +133,21 @@ extension SearchViewController:UITableViewDelegate, UITableViewDataSource {
 }
 
 extension SearchViewController:SearchBarDelegate {
-    func searchAct(_ input: String) {
+    func searchAction(_ input: String) {
         if ( input == "" ) {
             showAlert(alertText: "提醒", alertMessage: "請輸入搜尋條件")
             return
         }
+        
+        for cell in tableView.visibleCells {
+            if let cell = cell as? SearchCell {
+                cell.cellImageView.sd_cancelCurrentImageLoad()
+            }
+        }
+        
+        let taskID = beginBackgroundUpdateTask()
+        loading(isLoading: &isLoading)
+        tableView.setContentOffset(.zero, animated: false)
         
         viewModel.fetch(input,callBack:{ [weak self](errorMsg) in
             guard let self = self else { return }
@@ -136,7 +155,9 @@ extension SearchViewController:SearchBarDelegate {
                 self.showAlert(alertText: "撈取資料錯誤", alertMessage: errorMsg)
             }
             self.tableView.reloadData()
-        }) 
+            self.endBackgroundUpdateTask(taskID: taskID)
+            self.removeLoading(isLoading: &self.isLoading)
+        })
         print("search input:\(input)")
     }
 }

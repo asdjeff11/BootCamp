@@ -10,19 +10,19 @@ import UIKit
 import WebKit
 
 class ITuneDetailViewController:UIViewController {
-    var url_str:String?
+    var url_string:String?
     var webView = WKWebView()
-    let backBtn = UIButton()
-    let forwardBtn = UIButton()
-    var isLoading = false
+    let backButton = UIButton()
+    let forwardButton = UIButton()
+    var IsLoading = false
     override func viewDidLoad() {
         super.viewDidLoad()
         setUp()
         layout()
-        if let url_str = url_str,
+        if let url_str = url_string,
            let url = URL(string: url_str) {
             let urlRequest = URLRequest(url: url)
-            loading(isLoading: &isLoading)
+            loading(isLoading: &IsLoading)
             webView.load(urlRequest)
         }
     }
@@ -30,40 +30,40 @@ class ITuneDetailViewController:UIViewController {
     func setUp() {
         let backColor = Theme.themeStlye.getBackColor()
         let textColor = Theme.themeStlye.getTextColor()
-        view.layer.contents = backColor
-        setUpNav(title: "ITune",backButtonVisit: true)
+        view.backgroundColor = backColor
+        setUpNavigation(title: "ITune",backButtonVisit: true)
         webView.navigationDelegate = self
         
-        backBtn.isEnabled = false
-        backBtn.setTitle("上一頁", for: .normal)
-        backBtn.setTitleColor(textColor, for: .normal)
-        backBtn.backgroundColor = backColor
-        backBtn.layer.cornerRadius = 10
-        backBtn.addTarget(self, action: #selector(backAct), for: .touchUpInside)
+        backButton.isEnabled = false
+        backButton.setTitle("上一頁", for: .normal)
+        backButton.setTitleColor(backColor, for: .normal)
+        backButton.backgroundColor = textColor
+        backButton.layer.cornerRadius = 10
+        backButton.addTarget(self, action: #selector(backAct), for: .touchUpInside)
         
-        forwardBtn.isEnabled = false
-        forwardBtn.setTitle("下一頁", for: .normal)
-        forwardBtn.setTitleColor(textColor, for: .normal)
-        forwardBtn.backgroundColor = backColor
-        forwardBtn.layer.cornerRadius = 10
-        forwardBtn.addTarget(self, action: #selector(nextAct), for: .touchUpInside)
+        forwardButton.isEnabled = false
+        forwardButton.setTitle("下一頁", for: .normal)
+        forwardButton.setTitleColor(backColor, for: .normal)
+        forwardButton.backgroundColor = textColor
+        forwardButton.layer.cornerRadius = 10
+        forwardButton.addTarget(self, action: #selector(nextAct), for: .touchUpInside)
     }
     
     func layout() {
         let margins = view.layoutMarginsGuide
-        view.addSubviews(backBtn ,forwardBtn , webView)
+        view.addSubviews(backButton ,forwardButton , webView)
         NSLayoutConstraint.useAndActivateConstraints(constraints: [
-            backBtn.leadingAnchor.constraint(equalTo: view.leadingAnchor,constant: 30 * Theme.factor),
-            backBtn.widthAnchor.constraint(equalToConstant: 150 * Theme.factor),
-            backBtn.topAnchor.constraint(equalTo: margins.topAnchor,constant: 10 * Theme.factor),
-            backBtn.heightAnchor.constraint(equalToConstant: 30),
+            backButton.leadingAnchor.constraint(equalTo: view.leadingAnchor,constant: 30 * Theme.factor),
+            backButton.widthAnchor.constraint(equalToConstant: 150 * Theme.factor),
+            backButton.topAnchor.constraint(equalTo: margins.topAnchor,constant: 10 * Theme.factor),
+            backButton.heightAnchor.constraint(equalToConstant: 30),
         
-            forwardBtn.trailingAnchor.constraint(equalTo: view.trailingAnchor,constant: -30 * Theme.factor),
-            forwardBtn.widthAnchor.constraint(equalTo: backBtn.widthAnchor),
-            forwardBtn.centerYAnchor.constraint(equalTo: backBtn.centerYAnchor),
-            forwardBtn.heightAnchor.constraint(equalTo: backBtn.heightAnchor),
+            forwardButton.trailingAnchor.constraint(equalTo: view.trailingAnchor,constant: -30 * Theme.factor),
+            forwardButton.widthAnchor.constraint(equalTo: backButton.widthAnchor),
+            forwardButton.centerYAnchor.constraint(equalTo: backButton.centerYAnchor),
+            forwardButton.heightAnchor.constraint(equalTo: backButton.heightAnchor),
             
-            webView.topAnchor.constraint(equalTo: backBtn.bottomAnchor,constant: 10 * Theme.factor),
+            webView.topAnchor.constraint(equalTo: backButton.bottomAnchor,constant: 10 * Theme.factor),
             webView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             webView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             webView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
@@ -84,19 +84,24 @@ extension ITuneDetailViewController {
 
 extension ITuneDetailViewController:WKNavigationDelegate {
     func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
+        let action = UIAlertAction(title: "確認", style: .default) { [weak self] _ in
+            guard let self = self else { return }
+            leftButtonAction() // 返回上一頁
+        }
+        showAlert(alertText: "錯誤", alertMessage: "載入頁面失敗", alertAction: action)
         print(error.localizedDescription)
     }
     
     func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
         print("start load")
-        loading(isLoading: &isLoading)
+        loading(isLoading: &IsLoading)
     }
     
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         print("load finish")
-        removeLoading(isLoading: &isLoading)
-        forwardBtn.isEnabled = webView.canGoForward
-        backBtn.isEnabled = webView.canGoBack
+        removeLoading(isLoading: &IsLoading)
+        forwardButton.isEnabled = webView.canGoForward
+        backButton.isEnabled = webView.canGoBack
     }
     
     func webView(_ webView: WKWebView, createWebViewWith configuration: WKWebViewConfiguration, for navigationAction: WKNavigationAction, windowFeatures: WKWindowFeatures) -> WKWebView? {

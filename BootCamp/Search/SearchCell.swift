@@ -7,11 +7,12 @@
 
 import Foundation
 import UIKit
-
+import SDWebImage
 class SearchCell:UITableViewCell {
     var IsMovie:Bool = true {
         didSet {
             scriptionLabel.isHidden = !IsMovie
+            readMoreButton.isHidden = !IsMovie
         }
     }
     
@@ -50,18 +51,15 @@ class SearchCell:UITableViewCell {
     
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        let textColor = Theme.themeStlye.getTextColor()
-        let backColor = Theme.themeStlye.getBackColor()
         cellImageView = UIImageView()
-        cellImageView.layer.borderWidth = 1
-        cellImageView.layer.borderColor = UIColor.black.cgColor
-        trackLabel = UILabel.createLabel(size: 40 * Theme.factor, color: textColor)
-        artistLabel = UILabel.createLabel(size: 30 * Theme.factor, color: textColor)
-        collectionLabel = UILabel.createLabel(size: 30 * Theme.factor, color: textColor)
-        longLabel = UILabel.createLabel(size: 30 * Theme.factor, color: textColor)
-        scriptionLabel = UILabel.createLabel(size: 30 * Theme.factor, color: textColor)
+        trackLabel = UILabel.createLabel(size: 30 * Theme.factor)
+        artistLabel = UILabel.createLabel(size: 20 * Theme.factor)
+        collectionLabel = UILabel.createLabel(size: 20 * Theme.factor)
+        longLabel = UILabel.createLabel(size: 20 * Theme.factor)
+        scriptionLabel = UILabel.createLabel(size: 20 * Theme.factor)
+        
         myView = UIView()
-        myView.layer.borderColor = textColor.cgColor
+        myView.backgroundColor = .clear
         myView.layer.borderWidth = 1
         
         collectButtonWidth = collectButton.widthAnchor.constraint(equalToConstant: 100 * Theme.factor)
@@ -69,7 +67,7 @@ class SearchCell:UITableViewCell {
         
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        contentView.backgroundColor = backColor
+        backgroundColor = .clear
         layout()
         
     }
@@ -84,8 +82,8 @@ class SearchCell:UITableViewCell {
         NSLayoutConstraint.useAndActivateConstraints(constraints: [
             myView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor,constant: 10 * Theme.factor),
             myView.trailingAnchor.constraint(equalTo: contentView.trailingAnchor,constant: -10 * Theme.factor),
-            myView.topAnchor.constraint(equalTo: contentView.topAnchor,constant: 10 * Theme.factor),
-            myView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor,constant: -10 * Theme.factor)
+            myView.topAnchor.constraint(equalTo: contentView.topAnchor),
+            myView.bottomAnchor.constraint(equalTo: contentView.bottomAnchor)
         ])
         
         contentView.addSubviews(cellImageView,stackView,collectButton,scriptionLabel,readMoreButton)
@@ -115,16 +113,39 @@ class SearchCell:UITableViewCell {
     }
     
     func setData(searchModel:SearchModel) {
-        self.trackLabel.text = searchModel.trackName
-        self.artistLabel.text = searchModel.artistName
-        self.collectionLabel.text = searchModel.collectionName
-        self.longLabel.text = searchModel.longTime
-        self.scriptionLabel.text = searchModel.scription
+        trackLabel.text = searchModel.trackName
+        artistLabel.text = searchModel.artistName
+        collectionLabel.text = searchModel.collectionName
+        longLabel.text = searchModel.time
+        scriptionLabel.text = searchModel.scription
+        if ( searchModel.isFolder ) {
+            scriptionLabel.numberOfLines = 2
+            scriptionLabel.lineBreakMode = .byTruncatingTail
+            readMoreButton.setTitle("...read more", for: .normal)
+        }
+        else {
+            scriptionLabel.numberOfLines = 0
+            scriptionLabel.lineBreakMode = .byCharWrapping
+            readMoreButton.setTitle("folder", for: .normal)
+        }
         
-        self.scriptionLabel.numberOfLines = ( searchModel.isFolder ) ? 2 : 0
         self.isCollect = searchModel.isCollect
+        
+        self.cellImageView.sd_setImage(with: URL(string: searchModel.pictureURL),
+                                       placeholderImage: #imageLiteral(resourceName: "about.png"),
+                                       options: [.allowInvalidSSLCertificates])
     }
     
+    
+    func setThemeColor() {
+        let textColor = Theme.themeStlye.getTextColor()
+        myView.layer.borderColor = textColor.cgColor
+        trackLabel.textColor = textColor
+        artistLabel.textColor = textColor
+        collectionLabel.textColor = textColor
+        longLabel.textColor = textColor
+        scriptionLabel.textColor = textColor
+    }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
