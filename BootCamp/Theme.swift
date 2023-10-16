@@ -9,34 +9,38 @@ import Foundation
 import UIKit
 
 class Theme {
-    enum ThemeStyle {
-        case DarkTheme
-        case lightTheme
+    enum ThemeStyle:String, CaseIterable {
+        case DarkTheme = "深色主題"
+        case lightTheme = "淺色主題"
         
         func getTextColor()->UIColor {
             switch ( self ) {
             case .DarkTheme :
                 return .white
             case .lightTheme :
-                return .black
+                return UIColor(hex: 0x000000, alpha: 0.7)
             }
         }
         
         func getBackColor()->UIColor {
             switch( self ) {
             case .DarkTheme :
-                return .black
+                return UIColor(hex: 0x000000, alpha: 0.7)
             case .lightTheme :
                 return .white
             }
         }
-        func getThemeString()->String {
+        
+        func setButtonColor(button:UIButton) {
             switch ( self ) {
             case .DarkTheme :
-                return "深色主題"
+                button.setTitleColor(UIColor(hex: 0x000000, alpha: 0.7), for: .normal)
+                button.backgroundColor = .white
             case .lightTheme :
-                return "淺色主題"
+                button.setTitleColor(.white, for: .normal)
+                button.backgroundColor = UIColor(hex: 0x000000, alpha: 0.7)
             }
+            
         }
     }
     
