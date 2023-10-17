@@ -41,9 +41,13 @@
 		D7564FD72AD7E1C8005247D6 /* ITuneDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7564FD62AD7E1C8005247D6 /* ITuneDetailViewController.swift */; };
 		D7D6CC6C2ADD04F900DED46E /* CollectItemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7D6CC6B2ADD04F900DED46E /* CollectItemViewController.swift */; };
 		D7D6CC6E2ADD058B00DED46E /* CollectItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7D6CC6D2ADD058B00DED46E /* CollectItemViewModel.swift */; };
-		D7D6CC702ADD05A800DED46E /* CollectionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7D6CC6F2ADD05A800DED46E /* CollectionModel.swift */; };
 		D7D6CC722ADD082800DED46E /* SwipeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7D6CC712ADD082800DED46E /* SwipeView.swift */; };
 		D7D6CC742ADD104F00DED46E /* CollectItemCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7D6CC732ADD104F00DED46E /* CollectItemCell.swift */; };
+		D7D6CC782ADD2BDA00DED46E /* MyDataBase.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7D6CC772ADD2BDA00DED46E /* MyDataBase.swift */; };
+		D7D6CC7A2ADD2D6900DED46E /* Extension_String.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7D6CC792ADD2D6900DED46E /* Extension_String.swift */; };
+		D7D6CC7C2ADD2E7B00DED46E /* MyDataBaseStructer.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7D6CC7B2ADD2E7B00DED46E /* MyDataBaseStructer.swift */; };
+		D7D6CC7F2ADD33F700DED46E /* UserData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7D6CC7E2ADD33F700DED46E /* UserData.swift */; };
+		D7D6CC832ADD353A00DED46E /* PublicObject.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7D6CC822ADD353A00DED46E /* PublicObject.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -109,9 +113,13 @@
 		D7564FD62AD7E1C8005247D6 /* ITuneDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ITuneDetailViewController.swift; sourceTree = "<group>"; };
 		D7D6CC6B2ADD04F900DED46E /* CollectItemViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectItemViewController.swift; sourceTree = "<group>"; };
 		D7D6CC6D2ADD058B00DED46E /* CollectItemViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectItemViewModel.swift; sourceTree = "<group>"; };
-		D7D6CC6F2ADD05A800DED46E /* CollectionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectionModel.swift; sourceTree = "<group>"; };
 		D7D6CC712ADD082800DED46E /* SwipeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipeView.swift; sourceTree = "<group>"; };
 		D7D6CC732ADD104F00DED46E /* CollectItemCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectItemCell.swift; sourceTree = "<group>"; };
+		D7D6CC772ADD2BDA00DED46E /* MyDataBase.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyDataBase.swift; sourceTree = "<group>"; };
+		D7D6CC792ADD2D6900DED46E /* Extension_String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Extension_String.swift; sourceTree = "<group>"; };
+		D7D6CC7B2ADD2E7B00DED46E /* MyDataBaseStructer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyDataBaseStructer.swift; sourceTree = "<group>"; };
+		D7D6CC7E2ADD33F700DED46E /* UserData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserData.swift; sourceTree = "<group>"; };
+		D7D6CC822ADD353A00DED46E /* PublicObject.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PublicObject.swift; sourceTree = "<group>"; };
 		F4FDEC195E1D4A913172F271 /* Pods_BootCamp.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_BootCamp.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
@@ -174,6 +182,8 @@
 		D7448D9C2AD924EA005B140D /* Database */ = {
 			isa = PBXGroup;
 			children = (
+				D7D6CC772ADD2BDA00DED46E /* MyDataBase.swift */,
+				D7D6CC7B2ADD2E7B00DED46E /* MyDataBaseStructer.swift */,
 			);
 			path = Database;
 			sourceTree = "<group>";
@@ -192,7 +202,6 @@
 			children = (
 				D7D6CC6B2ADD04F900DED46E /* CollectItemViewController.swift */,
 				D7D6CC6D2ADD058B00DED46E /* CollectItemViewModel.swift */,
-				D7D6CC6F2ADD05A800DED46E /* CollectionModel.swift */,
 				D7D6CC732ADD104F00DED46E /* CollectItemCell.swift */,
 			);
 			path = Collect;
@@ -223,6 +232,8 @@
 		D7564F752AD772D5005247D6 /* BootCamp */ = {
 			isa = PBXGroup;
 			children = (
+				D7D6CC802ADD351600DED46E /* PublicObject */,
+				D7D6CC7D2ADD33E900DED46E /* UserData */,
 				D7448D9E2AD92674005B140D /* Collect */,
 				D7448D9D2AD9266A005B140D /* ChangeTheme */,
 				D7448D9C2AD924EA005B140D /* Database */,
@@ -292,6 +303,7 @@
 				D7564FBA2AD78607005247D6 /* Extension_UIImage.swift */,
 				D7564FC02AD78FCC005247D6 /* Extension_Label.swift */,
 				D7564FC22AD79208005247D6 /* Extension_UIView.swift */,
+				D7D6CC792ADD2D6900DED46E /* Extension_String.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -328,6 +340,22 @@
 				D7564FD62AD7E1C8005247D6 /* ITuneDetailViewController.swift */,
 			);
 			path = WebView;
+			sourceTree = "<group>";
+		};
+		D7D6CC7D2ADD33E900DED46E /* UserData */ = {
+			isa = PBXGroup;
+			children = (
+				D7D6CC7E2ADD33F700DED46E /* UserData.swift */,
+			);
+			path = UserData;
+			sourceTree = "<group>";
+		};
+		D7D6CC802ADD351600DED46E /* PublicObject */ = {
+			isa = PBXGroup;
+			children = (
+				D7D6CC822ADD353A00DED46E /* PublicObject.swift */,
+			);
+			path = PublicObject;
 			sourceTree = "<group>";
 		};
 		EE5644B985DC1B442DE397E3 /* Frameworks */ = {
@@ -583,18 +611,22 @@
 			files = (
 				D7564FBF2AD78D41005247D6 /* SearchCell.swift in Sources */,
 				D7564FC92AD79950005247D6 /* PersonalDataViewController.swift in Sources */,
+				D7D6CC7F2ADD33F700DED46E /* UserData.swift in Sources */,
 				D7564F7B2AD772D5005247D6 /* ViewController.swift in Sources */,
 				D7564FD22AD7CC8B005247D6 /* MyTextField.swift in Sources */,
 				D7564FA82AD77B1E005247D6 /* SearchViewController.swift in Sources */,
 				D7564FAA2AD77B2C005247D6 /* SearchViewModel.swift in Sources */,
 				D7564FBB2AD78607005247D6 /* Extension_UIImage.swift in Sources */,
 				D7D6CC6E2ADD058B00DED46E /* CollectItemViewModel.swift in Sources */,
+				D7D6CC782ADD2BDA00DED46E /* MyDataBase.swift in Sources */,
+				D7D6CC832ADD353A00DED46E /* PublicObject.swift in Sources */,
 				D7564FB42AD7808C005247D6 /* Extension_Color.swift in Sources */,
 				D7448DA22AD92703005B140D /* ChangeThemeCell.swift in Sources */,
 				D7564FBD2AD78844005247D6 /* SearchBar.swift in Sources */,
 				D7564FAF2AD77B8F005247D6 /* CustomViewController.swift in Sources */,
+				D7D6CC7C2ADD2E7B00DED46E /* MyDataBaseStructer.swift in Sources */,
 				D7564FC12AD78FCC005247D6 /* Extension_Label.swift in Sources */,
-				D7D6CC702ADD05A800DED46E /* CollectionModel.swift in Sources */,
+				D7D6CC7A2ADD2D6900DED46E /* Extension_String.swift in Sources */,
 				D7D6CC6C2ADD04F900DED46E /* CollectItemViewController.swift in Sources */,
 				D7564FC62AD7988B005247D6 /* MainTabBarController.swift in Sources */,
 				D7D6CC742ADD104F00DED46E /* CollectItemCell.swift in Sources */,

@@ -10,7 +10,7 @@ import UIKit
 
 class PersonalDataViewController:CustomViewController {
     lazy var themeView:PersonalSettingButton = {
-        let myView = PersonalSettingButton(title: "主題顏色", content: Theme.themeStlye.rawValue)
+        let myView = PersonalSettingButton(title: "主題顏色", content: userData.getThemeType().rawValue)
         return myView
     }()
     
@@ -24,27 +24,32 @@ class PersonalDataViewController:CustomViewController {
         let btn = UIButton()
         btn.backgroundColor = .clear
         btn.setImage(image.withRenderingMode(.alwaysTemplate), for: .normal)
-        btn.tintColor = Theme.themeStlye.getTextColor()
+        btn.tintColor = userData.getSecondColor()
         
         btn.setTitle("關於Apple iTunes", for: .normal)
-        btn.setTitleColor(Theme.themeStlye.getTextColor(), for: .normal)
+        btn.setTitleColor(userData.getSecondColor(), for: .normal)
         
         btn.addTarget(self, action: #selector(goAppleITunes), for: .touchUpInside)
         return btn
     }()
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.layer.contents = Theme.themeStlye.getBackColor()
         setUp()
         layout()
+        setThemeColor()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        collectItemView.myContentLabel.text = "共有 \(userData.getTotalCount())項收藏"
     }
     
     override func setThemeColor() {
         super.setThemeColor()
         themeView.updateColor()
         collectItemView.updateColor()
-        aboutAppleITuneButton.tintColor = Theme.themeStlye.getTextColor()
-        aboutAppleITuneButton.setTitleColor(Theme.themeStlye.getTextColor(), for: .normal)
+        aboutAppleITuneButton.tintColor = userData.getSecondColor()
+        aboutAppleITuneButton.setTitleColor(userData.getSecondColor(), for: .normal)
     }
     
 }
@@ -63,13 +68,13 @@ extension PersonalDataViewController {
     
     @objc func themeViewIsClick() {
         let changeThemeViewController = ChangeThemeViewController()
-        changeThemeViewController.view.backgroundColor = Theme.themeStlye.getBackColor()
+        changeThemeViewController.view.backgroundColor = userData.getMainColor()
         navigationController?.pushViewController(changeThemeViewController, animated: true)
     }
     
     @objc func collectViewIsClick() {
         let collectItemViewController = CollectItemViewController()
-        collectItemViewController.view.backgroundColor = Theme.themeStlye.getBackColor()
+        collectItemViewController.view.backgroundColor = userData.getMainColor()
         navigationController?.pushViewController(collectItemViewController, animated: true)
     }
     

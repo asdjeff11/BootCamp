@@ -14,7 +14,7 @@ extension UIViewController {
     func setUpNavigation(title:String,backButtonVisit:Bool = false) {
         self.title = title
         
-        let textColor:UIColor = Theme.themeStlye.getTextColor()
+        let secondColor:UIColor = userData.getSecondColor()
         let backColor:UIColor = UIColor(hex:0xAECFCC)
         let fontStyle = UIFont(name:"Helvetica Neue", size:25) ?? UIFont()
         
@@ -25,7 +25,7 @@ extension UIViewController {
             
             navigationBarAppearance.backgroundColor = backColor
             navigationBarAppearance.titleTextAttributes = [
-               .foregroundColor: textColor,
+               .foregroundColor: secondColor,
                .font: fontStyle
             ]
            
@@ -38,7 +38,7 @@ extension UIViewController {
         else {
             self.navigationController?.navigationBar.barTintColor = backColor
             self.navigationController?.navigationBar.titleTextAttributes = [
-                NSAttributedString.Key.foregroundColor: textColor,
+                NSAttributedString.Key.foregroundColor: secondColor,
                 NSAttributedString.Key.font: fontStyle
             ]
         }
@@ -46,7 +46,7 @@ extension UIViewController {
         let backButton = UIButton(frame: Theme.navigationBtnSize)
         let img = UIImage.scaleImage(image: UIImage(named: "back")!, newSize: Theme.navigationBtnSize.size)
             .withRenderingMode(.alwaysTemplate)
-        backButton.tintColor = textColor
+        backButton.tintColor = secondColor
         backButton.setImage(img, for: .normal)
         backButton.addTarget(self, action: #selector(leftButtonAction), for: .touchUpInside)
        

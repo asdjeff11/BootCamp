@@ -22,10 +22,13 @@ class CollectItemViewController:CustomViewController {
         super.viewDidLoad()
         setUp()
         layout()
-        viewModel.getData()
     }
     
-    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        viewModel.getData()
+        tableView.reloadData()
+    }
     
     @objc func swipeChange() {
         viewModel.updateType(type: (swipeView.selectIndex == 0) ? .電影 : .音樂)
@@ -37,11 +40,11 @@ class CollectItemViewController:CustomViewController {
 extension CollectItemViewController {
     func setUp() {
         setUpNavigation(title: "收藏項目", backButtonVisit: true)
-        let textColor = Theme.themeStlye.getTextColor()
+        let secondColor = userData.getSecondColor()
        
         tableView.backgroundColor = .clear
         tableView.layer.borderWidth = 1
-        tableView.layer.borderColor = textColor.cgColor
+        tableView.layer.borderColor = secondColor.cgColor
         tableView.separatorStyle = .none
         tableView.showsVerticalScrollIndicator = false
         tableView.register(CollectItemCell.self, forCellReuseIdentifier: "CollectItemCell")
@@ -65,7 +68,7 @@ extension CollectItemViewController {
     }
 }
 
-extension CollectItemViewController:UITableViewDelegate,UITableViewDataSource {
+extension CollectItemViewController:UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         viewModel.getItemSize()
     }
@@ -79,6 +82,7 @@ extension CollectItemViewController:UITableViewDelegate,UITableViewDataSource {
             return UITableViewCell()
         }
         
+        cell.selectionStyle = .none
         cell.setData(data: data)
         cell.setThemeColor()
         cell.removeCollectButton.addTarget(self, action: #selector(removeCollectClick(_:)), for: .touchUpInside)
@@ -86,7 +90,11 @@ extension CollectItemViewController:UITableViewDelegate,UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print( indexPath.row )
+        guard let item = viewModel.getData(indexPath: indexPath),
+              let url = URL(string:item.trackViewURL)
+        else { return }
+    
+        UIApplication.shared.open(url)
     }
     
     @objc func removeCollectClick(_ sender:UIButton) {

@@ -43,18 +43,17 @@ class SearchBar:UIView {
     }
     
     func updateTheme() {
-        let textColor = Theme.themeStlye.getTextColor()
-        let backColor = Theme.themeStlye.getBackColor()
+        let secondColor = userData.getSecondColor()
         
         // set textField
-        textField.layer.borderColor = textColor.cgColor
+        textField.layer.borderColor = secondColor.cgColor
         textField.layer.borderWidth = 1
-        textField.textColor = textColor
+        textField.textColor = secondColor
         
         let img = UIImage.scaleImage(image: #imageLiteral(resourceName: "search.png"), newSize: CGSize(width: 70 * Theme.factor, height: 70 * Theme.factor))
         let buttonImg = img.withRenderingMode(.alwaysTemplate)
         button.setImage(buttonImg, for: .normal)
-        button.tintColor = textColor
+        button.tintColor = secondColor
     }
     
     required init?(coder: NSCoder) {

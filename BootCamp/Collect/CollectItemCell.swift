@@ -33,9 +33,9 @@ class CollectItemCell:UITableViewCell {
 
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        layer.borderColor = Theme.themeStlye.getTextColor().cgColor
+        layer.borderColor = userData.getSecondColor().cgColor
         layer.borderWidth = 1
-        backgroundColor = .clear
+        backgroundColor = userData.getMainColor()
         layout()
         
     }
@@ -65,24 +65,24 @@ class CollectItemCell:UITableViewCell {
         ])
     }
     
-    func setData(data:CollectionModel) {
+    func setData(data:MyITuneData) {
         self.trackLabel.text = data.trackName
         self.artistLabel.text = data.artistName
         self.collectionLabel.text = data.collectionName
-        self.longLabel.text = data.time
+        self.longLabel.text = data.long
         
-        self.cellImageView.sd_setImage(with: URL(string: data.pictureURL),
+        self.cellImageView.sd_setImage(with: URL(string: data.imageURL),
                                        placeholderImage: #imageLiteral(resourceName: "about.png"),
                                        options: [.allowInvalidSSLCertificates])
     }
     
     func setThemeColor() {
-        let textColor = Theme.themeStlye.getTextColor()
-        layer.borderColor = textColor.cgColor
-        trackLabel.textColor = textColor
-        artistLabel.textColor = textColor
-        collectionLabel.textColor = textColor
-        longLabel.textColor = textColor
+        let secondColor = userData.getSecondColor()
+        layer.borderColor = secondColor.cgColor
+        trackLabel.textColor = secondColor
+        artistLabel.textColor = secondColor
+        collectionLabel.textColor = secondColor
+        longLabel.textColor = secondColor
     }
     
     required init?(coder: NSCoder) {

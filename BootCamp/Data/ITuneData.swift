@@ -6,6 +6,21 @@
 //
 
 import Foundation
+
+enum MediaType:Int {
+    case 電影 = 0
+    case 音樂 = 1
+    
+    func getType()->String { // 提供給api使用
+        switch ( self ) {
+        case .電影 :
+            return "movie"
+        case .音樂 :
+            return "music"
+        }
+    }
+}
+
 struct ITuneResult:Codable {
     var resultCount:Int
     var results:[ITuneDataDetail]
@@ -59,22 +74,9 @@ extension ITuneDataDetail {
 }
 
 struct SearchITuneCondition {
-    enum SearchType {
-        case 電影
-        case 音樂
-        func getType()->String {
-            switch ( self ) {
-            case .電影 :
-                return "movie"
-            case .音樂 :
-                return "music"
-            }
-        }
-    }
-    
     var term:String
     //var country:String?
-    var media:SearchType = .電影
+    var media:MediaType = .電影
     func getUrl(offset:Int? = nil, limit:Int? = nil)->String {
         var url = "https://itunes.apple.com/search?"
         url += "term=\(term)"
@@ -94,26 +96,3 @@ struct SearchITuneCondition {
         return url.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
     }
 }
-
-/*
- struct ITuneMusicData:Codable {
-     var trackId:Int
-     var trackName:String // 音樂名稱
-     var artistName:String // 作者
-     var collectionName:String //
-     var trackTimeMillis:Double // 音樂長度 到毫秒
-     var trackViewUrl:String // url 連結
-     var artworkUrl100:String // 圖片連結
- }
-
- struct ITuneMovieData:Codable {
-     var trackId:Int
-     var trackName:String // 電影名稱
-     var artistName:String // 作者
-     var collectionName:String //
-     var trackTimeMillis:Double // 長度
-     var trackViewUrl:String // url 連結
-     var artworkUrl100:String // 圖片連結
-     var longDescription:String // 描述
- }
- */

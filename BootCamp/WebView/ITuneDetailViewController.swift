@@ -11,7 +11,32 @@ import WebKit
 
 class ITuneDetailViewController:UIViewController {
     var url_string:String?
-    var webView = WKWebView()
+    
+    var obs = [NSKeyValueObservation]()
+    lazy var webView:WKWebView = {
+        let webConfiguration = WKWebViewConfiguration()
+        webConfiguration.allowsInlineMediaPlayback = true
+        webConfiguration.defaultWebpagePreferences.allowsContentJavaScript = true
+        webConfiguration.allowsAirPlayForMediaPlayback = true
+        webConfiguration.allowsPictureInPictureMediaPlayback = true
+        
+        let webView = WKWebView(frame: .zero, configuration: webConfiguration)
+        webView.allowsBackForwardNavigationGestures = true
+        webView.allowsLinkPreview = true
+        
+        
+        
+        obs.append(webView.observe(\.canGoBack, options: [.new], changeHandler: { [weak self] (_,change) in
+            guard let self = self else { return }
+            self.backButton.isEnabled = change.newValue ?? false
+        }))
+        
+        obs.append(webView.observe(\.canGoForward, options: [.new], changeHandler: { [weak self] (_,change) in
+            guard let self = self else { return }
+            self.forwardButton.isEnabled = change.newValue ?? false
+        }))
+        return webView
+    }()
     let backButton = UIButton()
     let forwardButton = UIButton()
     var IsLoading = false
@@ -25,26 +50,38 @@ class ITuneDetailViewController:UIViewController {
             loading(isLoading: &IsLoading)
             webView.load(urlRequest)
         }
+        else {
+            let alertAction = UIAlertAction(title: "確認", style: .default) { [weak self] _ in
+                guard let self = self else { return }
+                self.leftButtonAction()
+            }
+            showAlert(alertText: "錯誤", alertMessage: "URL轉換失敗\nURL:\(url_string ?? "")", alertAction: alertAction)
+        }
+    }
+    
+    override func viewWillTerminate() {
+        super.viewWillTerminate()
+        obs.removeAll()
     }
     
     func setUp() {
-        let backColor = Theme.themeStlye.getBackColor()
-        let textColor = Theme.themeStlye.getTextColor()
-        view.backgroundColor = backColor
+        let mainColor = userData.getMainColor()
+        let secondColor = userData.getSecondColor()
+        //view.backgroundColor = mainColor
         setUpNavigation(title: "ITune",backButtonVisit: true)
         webView.navigationDelegate = self
         
         backButton.isEnabled = false
         backButton.setTitle("上一頁", for: .normal)
-        backButton.setTitleColor(backColor, for: .normal)
-        backButton.backgroundColor = textColor
+        backButton.setTitleColor(mainColor, for: .normal)
+        backButton.backgroundColor = secondColor
         backButton.layer.cornerRadius = 10
         backButton.addTarget(self, action: #selector(backAct), for: .touchUpInside)
         
         forwardButton.isEnabled = false
         forwardButton.setTitle("下一頁", for: .normal)
-        forwardButton.setTitleColor(backColor, for: .normal)
-        forwardButton.backgroundColor = textColor
+        forwardButton.setTitleColor(mainColor, for: .normal)
+        forwardButton.backgroundColor = secondColor
         forwardButton.layer.cornerRadius = 10
         forwardButton.addTarget(self, action: #selector(nextAct), for: .touchUpInside)
     }
@@ -66,7 +103,7 @@ class ITuneDetailViewController:UIViewController {
             webView.topAnchor.constraint(equalTo: backButton.bottomAnchor,constant: 10 * Theme.factor),
             webView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             webView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            webView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+            webView.bottomAnchor.constraint(equalTo: margins.bottomAnchor)
         ])
     }
 }
@@ -84,11 +121,15 @@ extension ITuneDetailViewController {
 
 extension ITuneDetailViewController:WKNavigationDelegate {
     func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
+        if error.asAFError?.responseCode == NSURLErrorCancelled { return }
         let action = UIAlertAction(title: "確認", style: .default) { [weak self] _ in
             guard let self = self else { return }
-            leftButtonAction() // 返回上一頁
+            self.leftButtonAction() // 返回上一頁
         }
-        showAlert(alertText: "錯誤", alertMessage: "載入頁面失敗", alertAction: action)
+        
+        showAlert(alertText: "錯誤", alertMessage: "載入頁面失敗", alertAction: (webView.canGoBack) ? nil : action)
+        removeLoading(isLoading: &self.IsLoading)
+        
         print(error.localizedDescription)
     }
     
@@ -100,8 +141,6 @@ extension ITuneDetailViewController:WKNavigationDelegate {
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         print("load finish")
         removeLoading(isLoading: &IsLoading)
-        forwardButton.isEnabled = webView.canGoForward
-        backButton.isEnabled = webView.canGoBack
     }
     
     func webView(_ webView: WKWebView, createWebViewWith configuration: WKWebViewConfiguration, for navigationAction: WKNavigationAction, windowFeatures: WKWindowFeatures) -> WKWebView? {
@@ -112,6 +151,7 @@ extension ITuneDetailViewController:WKNavigationDelegate {
         return nil // 不開新的webView
     }
     
+    // 決定網頁是否允許跳轉
     func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, preferences: WKWebpagePreferences, decisionHandler: @escaping (WKNavigationActionPolicy, WKWebpagePreferences) -> Void) {
         if navigationAction.shouldPerformDownload {
             decisionHandler(.download, preferences)
@@ -122,14 +162,26 @@ extension ITuneDetailViewController:WKNavigationDelegate {
         }
         else {
             decisionHandler(.allow, preferences)
+            
         }
     }
     
+    // 收到網頁 Response 決定是否跳轉
     func webView(_ webView: WKWebView, decidePolicyFor navigationResponse: WKNavigationResponse, decisionHandler: @escaping (WKNavigationResponsePolicy) -> Void) {
         if navigationResponse.canShowMIMEType {
             decisionHandler(.allow)
+            forwardButton.isEnabled = webView.canGoForward
+            backButton.isEnabled = webView.canGoBack
         } else {
             decisionHandler(.download)
+        }
+    }
+    
+    func webView(_ webView: WKWebView, didReceive challenge: URLAuthenticationChallenge, completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
+        // 一律信任網站 ( 可能要有憑證做檢查 )
+        let cred = URLCredential(trust: challenge.protectionSpace.serverTrust!)
+        DispatchQueue.global(qos: .background).async {
+            completionHandler(.useCredential, cred)
         }
     }
 }
