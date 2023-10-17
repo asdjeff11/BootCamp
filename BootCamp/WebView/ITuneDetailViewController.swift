@@ -124,7 +124,7 @@ extension ITuneDetailViewController:WKNavigationDelegate {
         if error.asAFError?.responseCode == NSURLErrorCancelled { return }
         let action = UIAlertAction(title: "確認", style: .default) { [weak self] _ in
             guard let self = self else { return }
-            leftButtonAction() // 返回上一頁
+            self.leftButtonAction() // 返回上一頁
         }
         
         showAlert(alertText: "錯誤", alertMessage: "載入頁面失敗", alertAction: (webView.canGoBack) ? nil : action)
