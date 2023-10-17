@@ -14,11 +14,11 @@ class CollectItemViewModel {
     }
     
     private var collectType:CollectType = .電影
-    var movies = [CollectionModel]()
-    var musics = [CollectionModel]()
+    var movies = [MyITuneData]()
+    var musics = [MyITuneData]()
     func getData() {
-        movies.append(CollectionModel(trackId: 123321, trackName: "測試Movie", artistName: "測試artist", collectionName:"測試collectionName",  time: "10:00:00", trackViewUrl: "", pictureURL: ""))
-        musics.append(CollectionModel(trackId: 4433, trackName: "測試Music", artistName: "測試artist", collectionName:"測試collectionName",  time: "10:00:00", trackViewUrl: "", pictureURL: ""))
+        movies = userData.getAllCollectMovies()
+        musics = userData.getAllCollectMusic()
     }
 }
 
@@ -32,8 +32,8 @@ extension CollectItemViewModel {
         }
     }
     
-    func getData(indexPath:IndexPath)->CollectionModel? {
-        var array = [CollectionModel]()
+    func getData(indexPath:IndexPath)->MyITuneData? {
+        var array = [MyITuneData]()
         switch( collectType ) {
         case .電影 :
             array = movies
@@ -48,8 +48,12 @@ extension CollectItemViewModel {
     func removeData(indexPath:IndexPath) {
         switch ( collectType ) {
         case .電影 :
+            let trackId = movies[indexPath.row].trackId
+            userData.removeData(trackId: trackId)
             movies.remove(at: indexPath.row)
         case .音樂 :
+            let trackId = musics[indexPath.row].trackId
+            userData.removeData(trackId: trackId)
             musics.remove(at: indexPath.row)
         }
     }

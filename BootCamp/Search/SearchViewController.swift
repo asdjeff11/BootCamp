@@ -7,12 +7,8 @@
 
 import Foundation
 import UIKit
+
 class SearchViewController:CustomViewController {
-    enum MediaType:Int {
-        case 電影 = 0
-        case 音樂
-    }
-    
     let searchBar = SearchBar()
     let tableView = UITableView()
     let viewModel = SearchViewModel()
@@ -23,21 +19,31 @@ class SearchViewController:CustomViewController {
         layout()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        viewModel.refreshCollect()
+        tableView.reloadData() // 確保追蹤的資訊是正常的
+    }
+    
+    
     func setUp() {
-        view.layer.contents = UIColor.white
         setUpNavigation(title: "ITune")
         searchBar.delegate = self
         
-        tableView.showsVerticalScrollIndicator = false
-        tableView.layer.borderColor = Theme.themeStlye.getTextColor().cgColor
-        tableView.layer.borderWidth = 1
         tableView.backgroundColor = .clear
+        tableView.layer.borderWidth = 1
+        tableView.layer.borderColor = Theme.themeStlye.getTextColor().cgColor
         tableView.separatorStyle = .none
+        tableView.showsVerticalScrollIndicator = false
         tableView.register(SearchCell.self, forCellReuseIdentifier: "SearchCell")
         tableView.delegate = self
         tableView.dataSource = self
         
+        
+        setThemeColor()
+        
         let tapG = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
+        tapG.cancelsTouchesInView = false // 防止其他元件的點擊事件失效
         view.addGestureRecognizer(tapG)
         
     }
@@ -104,14 +110,24 @@ extension SearchViewController:UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        guard let cell = tableView.dequeueReusableCell(withIdentifier: "SearchCell") as? SearchCell else { return UITableViewCell() }
-        let item = viewModel.getData(indexPath: indexPath)
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "SearchCell") as? SearchCell,
+              let item = viewModel.getData(indexPath: indexPath)
+        else { return UITableViewCell() }
+        
         cell.IsMovie = ( indexPath.section == MediaType.電影.rawValue )
         cell.setData(searchModel: item)
         cell.readMoreButton.addTarget(self, action: #selector(readMoreClick(_:)), for: .touchUpInside)
         cell.collectButton.addTarget(self, action: #selector(collectClick(_:)), for: .touchUpInside)
         cell.setThemeColor()
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        guard let item = viewModel.getData(indexPath: indexPath) else { return }
+        let url = item.ITuneData.trackViewURL
+        let viewController = ITuneDetailViewController()
+        viewController.url_string = url
+        navigationController?.pushViewController(viewController, animated: true)
     }
     
     @objc func readMoreClick(_ sender:UIButton ) {

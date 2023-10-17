@@ -34,9 +34,14 @@ class PersonalDataViewController:CustomViewController {
     }()
     override func viewDidLoad() {
         super.viewDidLoad()
-        view.layer.contents = Theme.themeStlye.getBackColor()
         setUp()
         layout()
+        setThemeColor()
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        collectItemView.myContentLabel.text = "共有 \(userData.getTotalCount())項收藏"
     }
     
     override func setThemeColor() {

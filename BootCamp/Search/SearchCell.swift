@@ -113,11 +113,12 @@ class SearchCell:UITableViewCell {
     }
     
     func setData(searchModel:SearchModel) {
-        trackLabel.text = searchModel.trackName
-        artistLabel.text = searchModel.artistName
-        collectionLabel.text = searchModel.collectionName
-        longLabel.text = searchModel.time
-        scriptionLabel.text = searchModel.scription
+        let detail = searchModel.ITuneData
+        trackLabel.text = detail.trackName
+        artistLabel.text = detail.artistName
+        collectionLabel.text = detail.collectionName
+        longLabel.text = detail.long
+        scriptionLabel.text = detail.scription
         if ( searchModel.isFolder ) {
             scriptionLabel.numberOfLines = 2
             scriptionLabel.lineBreakMode = .byTruncatingTail
@@ -131,7 +132,7 @@ class SearchCell:UITableViewCell {
         
         self.isCollect = searchModel.isCollect
         
-        self.cellImageView.sd_setImage(with: URL(string: searchModel.pictureURL),
+        self.cellImageView.sd_setImage(with: URL(string: detail.imageURL),
                                        placeholderImage: #imageLiteral(resourceName: "about.png"),
                                        options: [.allowInvalidSSLCertificates])
     }

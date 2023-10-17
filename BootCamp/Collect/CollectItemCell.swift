@@ -65,13 +65,13 @@ class CollectItemCell:UITableViewCell {
         ])
     }
     
-    func setData(data:CollectionModel) {
+    func setData(data:MyITuneData) {
         self.trackLabel.text = data.trackName
         self.artistLabel.text = data.artistName
         self.collectionLabel.text = data.collectionName
-        self.longLabel.text = data.time
+        self.longLabel.text = data.long
         
-        self.cellImageView.sd_setImage(with: URL(string: data.pictureURL),
+        self.cellImageView.sd_setImage(with: URL(string: data.imageURL),
                                        placeholderImage: #imageLiteral(resourceName: "about.png"),
                                        options: [.allowInvalidSSLCertificates])
     }

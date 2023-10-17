@@ -17,6 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.rootViewController = MainTabBarViewController()
         window?.makeKeyAndVisible()
         
+        userData.getDbData()
         return true
     }
 }

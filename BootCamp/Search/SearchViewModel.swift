@@ -14,7 +14,7 @@ class SearchViewModel {
 //        case responseError
 //    }
     var movies = [SearchModel]()
-    var music = [SearchModel]()
+    var musics = [SearchModel]()
     var errorMessages = Array(repeating: "", count: 2) // [0]:movie , [1]:music
     let group = DispatchGroup()
     var task:UIBackgroundTaskIdentifier?
@@ -48,12 +48,11 @@ extension SearchViewModel {
         self.fetchURLData(url_Str: condition.getUrl(), finishCallBack:{ (result:Result<ITuneResult,Error>) in
             switch ( result ) {
             case .success(let datas) :
-                let objects = datas.results.map({ SearchModel(detail: $0) })
                 switch( condition.media ) {
                 case .電影 :
-                    self.movies = objects
+                    self.movies = datas.results.map({ SearchModel(detail: $0,type: condition.media) })
                 case .音樂 :
-                    self.music = objects
+                    self.musics = datas.results.map({ SearchModel(detail: $0,type: condition.media) })
                 }
             case .failure(let error) :
                 self.errorMessages[errorIndex] = error.localizedDescription
@@ -83,36 +82,49 @@ extension SearchViewModel {
             self.movies[indexPath.row].isFolder = !self.movies[indexPath.row].isFolder
         }
         else {
-            self.music[indexPath.row].isFolder = !self.music[indexPath.row].isFolder
+            self.musics[indexPath.row].isFolder = !self.musics[indexPath.row].isFolder
         }
     }
     
     func setCollect(indexPath:IndexPath) {
-        if ( indexPath.section == 0 ) {
-            self.movies[indexPath.row].isCollect = !self.movies[indexPath.row].isCollect
+        var data:SearchModel
+        switch ( indexPath.section ) {
+        case 0 :
+            data = movies[indexPath.row]
+        case 1 :
+            data = musics[indexPath.row]
+        default :
+            return
         }
-        else {
-            self.music[indexPath.row].isCollect = !self.music[indexPath.row].isCollect
+        
+        if ( data.isCollect ) { // 原本追蹤
+            userData.removeData(trackId: data.ITuneData.trackId)
         }
+        else { // 原本沒追蹤
+            userData.saveData(data: data.ITuneData)
+        }
+        
+        data.isCollect = !data.isCollect
     }
 }
 
 // view 訪問取得資料
 extension SearchViewModel {
     func getMusicSize()->Int {
-        music.count
+        musics.count
     }
     
     func getMovieSize()->Int {
         movies.count
     }
     
-    func getData(indexPath:IndexPath)->SearchModel {
-        if ( indexPath.section == 0 ) { // movie
-            return movies[indexPath.row]
+    func getData(indexPath:IndexPath)->SearchModel? {
+        let array = (indexPath.section == MediaType.電影.rawValue) ? movies : musics
+        if ( array.count > indexPath.row ) {
+            return array[indexPath.row]
         }
-        else { // music
-            return music[indexPath.row]
+        else { // 降低 index out of range 的可能性
+            return nil
         }
     }
 }
@@ -121,7 +133,7 @@ extension SearchViewModel {
 extension SearchViewModel {
     // 重置資料
     private func initData() {
-        music.removeAll()
+        musics.removeAll()
         movies.removeAll()
         errorMessages = Array(repeating: "", count: 2)
     }
@@ -138,5 +150,15 @@ extension SearchViewModel {
             errMsg += "fetch music Error: \(self.errorMessages[1])"
         }
         return errMsg
+    }
+    
+    // 刷新所有追蹤資訊
+    func refreshCollect() {
+        for movie in movies {
+            movie.isCollect = userData.isCollect(trackId: movie.ITuneData.trackId)
+        }
+        for music in musics {
+            music.isCollect = userData.isCollect(trackId: music.ITuneData.trackId)
+        }
     }
 }

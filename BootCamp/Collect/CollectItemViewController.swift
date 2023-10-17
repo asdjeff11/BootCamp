@@ -65,7 +65,7 @@ extension CollectItemViewController {
     }
 }
 
-extension CollectItemViewController:UITableViewDelegate,UITableViewDataSource {
+extension CollectItemViewController:UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         viewModel.getItemSize()
     }
@@ -79,6 +79,7 @@ extension CollectItemViewController:UITableViewDelegate,UITableViewDataSource {
             return UITableViewCell()
         }
         
+        
         cell.setData(data: data)
         cell.setThemeColor()
         cell.removeCollectButton.addTarget(self, action: #selector(removeCollectClick(_:)), for: .touchUpInside)
@@ -86,7 +87,11 @@ extension CollectItemViewController:UITableViewDelegate,UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        print( indexPath.row )
+        guard let item = viewModel.getData(indexPath: indexPath) else { return }
+        let url = item.trackViewURL
+        let viewController = ITuneDetailViewController()
+        viewController.url_string = url
+        navigationController?.pushViewController(viewController, animated: true)
     }
     
     @objc func removeCollectClick(_ sender:UIButton) {
