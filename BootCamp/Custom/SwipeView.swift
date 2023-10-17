@@ -26,7 +26,7 @@ class SwipeView:UIControl {
             view.removeFromSuperview()
         }
         
-        let detailColor = Theme.themeStlye.getTextColor()
+        let detailColor = userData.getSecondColor()
         let buttonsTitles = commaSeperatedButtonTitles.components(separatedBy: ",")
         for title in buttonsTitles {
             let button = UIButton.init(type:.system)

@@ -33,9 +33,9 @@ class CollectItemCell:UITableViewCell {
 
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        layer.borderColor = Theme.themeStlye.getTextColor().cgColor
+        layer.borderColor = userData.getSecondColor().cgColor
         layer.borderWidth = 1
-        backgroundColor = .clear
+        backgroundColor = userData.getMainColor()
         layout()
         
     }
@@ -77,12 +77,12 @@ class CollectItemCell:UITableViewCell {
     }
     
     func setThemeColor() {
-        let textColor = Theme.themeStlye.getTextColor()
-        layer.borderColor = textColor.cgColor
-        trackLabel.textColor = textColor
-        artistLabel.textColor = textColor
-        collectionLabel.textColor = textColor
-        longLabel.textColor = textColor
+        let secondColor = userData.getSecondColor()
+        layer.borderColor = secondColor.cgColor
+        trackLabel.textColor = secondColor
+        artistLabel.textColor = secondColor
+        collectionLabel.textColor = secondColor
+        longLabel.textColor = secondColor
     }
     
     required init?(coder: NSCoder) {

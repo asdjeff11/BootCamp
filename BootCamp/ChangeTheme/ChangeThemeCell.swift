@@ -17,7 +17,7 @@ class ChangeThemeCell:UITableViewCell {
         
         
         selectLogo.image = #imageLiteral(resourceName: "select.png").withRenderingMode(.alwaysTemplate)
-        selectLogo.tintColor = Theme.themeStlye.getTextColor()
+        selectLogo.tintColor = userData.getSecondColor()
         selectLogo.isHidden = true
         self.layer.borderWidth = 1
         self.backgroundColor = .clear
@@ -36,10 +36,10 @@ class ChangeThemeCell:UITableViewCell {
     }
     
     func setThemeStyle() {
-        let textColor = Theme.themeStlye.getTextColor()
-        selectLogo.tintColor = textColor
-        self.layer.borderColor = textColor.cgColor
-        titleLabel.textColor = textColor
+        let secondColor = userData.getSecondColor()
+        selectLogo.tintColor = secondColor
+        self.layer.borderColor = secondColor.cgColor
+        titleLabel.textColor = secondColor
     }
     
     

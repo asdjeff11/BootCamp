@@ -13,42 +13,26 @@ class Theme {
         case DarkTheme = "深色主題"
         case LightTheme = "淺色主題"
         
-        func getTextColor()->UIColor {
+        func getSecondColor()->UIColor {
             switch ( self ) {
             case .DarkTheme :
                 return .white
             case .LightTheme :
-                return UIColor(hex: 0x000000, alpha: 0.7)
+                return .black
             }
         }
         
-        func getBackColor()->UIColor {
+        func getMainColor()->UIColor {
             switch( self ) {
             case .DarkTheme :
-                return UIColor(hex: 0x000000, alpha: 0.7)
+                return .gray
             case .LightTheme :
                 return .white
             }
         }
         
-        func setButtonColor(button:UIButton) {
-            switch ( self ) {
-            case .DarkTheme :
-                button.setTitleColor(UIColor(hex: 0x000000, alpha: 0.7), for: .normal)
-                button.backgroundColor = .white
-            case .LightTheme :
-                button.setTitleColor(.white, for: .normal)
-                button.backgroundColor = UIColor(hex: 0x000000, alpha: 0.7)
-            }
-            
-        }
     }
-    
-    static var themeStlye:ThemeStyle = userData.getThemeType() {
-        didSet {
-            userData.updateThemeType()
-        }
-    }
+ 
     static var fullSize = UIScreen.main.bounds.size
     static let factor = UIScreen.main.bounds.width / 720
     static let navigationBtnSize = CGRect(x:0,y:0,width: 50 * factor, height: 50 * factor)

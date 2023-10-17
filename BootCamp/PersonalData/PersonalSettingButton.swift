@@ -21,7 +21,7 @@ class PersonalSettingButton:UIView {
         
         self.backgroundColor = .clear
         self.layer.borderWidth = 1
-        self.layer.borderColor = Theme.themeStlye.getTextColor().cgColor
+        self.layer.borderColor = userData.getSecondColor().cgColor
         layout()
         updateColor()
     }
@@ -53,13 +53,12 @@ class PersonalSettingButton:UIView {
     }
     
     func updateColor() {
-        let textColor = Theme.themeStlye.getTextColor()
-        _ = Theme.themeStlye.getBackColor()
+        let secondColor = userData.getSecondColor()
         
-        self.layer.borderColor = textColor.cgColor
-        myTitleLabel.textColor = textColor
-        myContentLabel.textColor = textColor
-        goIcon.tintColor = textColor
+        self.layer.borderColor = secondColor.cgColor
+        myTitleLabel.textColor = secondColor
+        myContentLabel.textColor = secondColor
+        goIcon.tintColor = secondColor
         
     }
     

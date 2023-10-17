@@ -6,7 +6,7 @@
 //
 
 import Foundation
-
+import UIKit
 class UserData {
     private var collectMovies:[Int:MyITuneData] = [:] // trackId => data
     private var collectMusics:[Int:MyITuneData] = [:]
@@ -17,14 +17,6 @@ class UserData {
         if let themeStyle = userDefault.value(forKey: "ThemeStyle") as? String {
             themeType = themeStyle == "深色主題" ? .DarkTheme : .LightTheme
         }
-    }
-    
-    func getThemeType()->Theme.ThemeStyle {
-        themeType
-    }
-    
-    func updateThemeType() {
-        userDefault.set(Theme.themeStlye.rawValue, forKey: "ThemeStyle")
     }
     
     func getDbData() {
@@ -39,15 +31,30 @@ class UserData {
             }
         }
     }
-    
-    func getAllCollectMovies()->[MyITuneData] {
-        Array(collectMovies.values)
+}
+
+// 主題色
+extension UserData {
+    func getSecondColor()->UIColor {
+        themeType.getSecondColor()
     }
     
-    func getAllCollectMusic()->[MyITuneData] {
-        Array(collectMusics.values)
+    func getMainColor()->UIColor {
+        themeType.getMainColor()
     }
     
+    func getThemeType()->Theme.ThemeStyle {
+        themeType
+    }
+    
+    func updateThemeType(type:Theme.ThemeStyle) {
+        userDefault.set(type.rawValue, forKey: "ThemeStyle")
+        themeType = type
+    }
+}
+
+// 新增 刪除 追蹤
+extension UserData {
     func saveData(data:MyITuneData) {
         db.executeQuery(query: data.getUpdateQuery())
         switch ( data.type ) {
@@ -68,9 +75,19 @@ class UserData {
         
         self.collectMovies.removeValue(forKey: trackId)
         self.collectMusics.removeValue(forKey: trackId)
-        
+    }
+}
+
+
+// 取得追蹤
+extension UserData {
+    func getAllCollectMovies()->[MyITuneData] {
+        Array(collectMovies.values)
     }
     
+    func getAllCollectMusic()->[MyITuneData] {
+        Array(collectMusics.values)
+    }
     
     func isCollect(trackId:Int) -> Bool {
         return ( collectMovies[trackId] != nil || collectMusics[trackId] != nil )
@@ -78,7 +95,15 @@ class UserData {
     
     func getTotalCount()->String {
         let count = collectMovies.count + collectMusics.count
-        return count.formatted()
+        if #available(iOS 15.0, *) {
+            return count.formatted()
+        }
+        else {
+            let formate = NumberFormatter()
+            formate.maximumFractionDigits = 0
+            formate.numberStyle = .decimal
+            return formate.string(from: NSNumber(value:count)) ?? "\(count)"
+        }
+        
     }
-    
 }

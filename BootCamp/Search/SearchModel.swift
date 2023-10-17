@@ -12,7 +12,7 @@ class SearchModel {
     var ITuneData:MyITuneData
     init(detail:ITuneDataDetail, type:MediaType) {
         isFolder = true
-        isCollect = false
+        isCollect = userData.isCollect(trackId: detail.trackId)
         ITuneData = MyITuneData(detail:detail,type:type)
     }
 }

@@ -65,23 +65,23 @@ class ITuneDetailViewController:UIViewController {
     }
     
     func setUp() {
-        let backColor = Theme.themeStlye.getBackColor()
-        let textColor = Theme.themeStlye.getTextColor()
-        view.backgroundColor = backColor
+        let mainColor = userData.getMainColor()
+        let secondColor = userData.getSecondColor()
+        //view.backgroundColor = mainColor
         setUpNavigation(title: "ITune",backButtonVisit: true)
         webView.navigationDelegate = self
         
         backButton.isEnabled = false
         backButton.setTitle("上一頁", for: .normal)
-        backButton.setTitleColor(backColor, for: .normal)
-        backButton.backgroundColor = textColor
+        backButton.setTitleColor(mainColor, for: .normal)
+        backButton.backgroundColor = secondColor
         backButton.layer.cornerRadius = 10
         backButton.addTarget(self, action: #selector(backAct), for: .touchUpInside)
         
         forwardButton.isEnabled = false
         forwardButton.setTitle("下一頁", for: .normal)
-        forwardButton.setTitleColor(backColor, for: .normal)
-        forwardButton.backgroundColor = textColor
+        forwardButton.setTitleColor(mainColor, for: .normal)
+        forwardButton.backgroundColor = secondColor
         forwardButton.layer.cornerRadius = 10
         forwardButton.addTarget(self, action: #selector(nextAct), for: .touchUpInside)
     }

@@ -19,28 +19,6 @@ class MyDataBase {
         executeQuery(query: MyITuneData.createTable())
     }
     
-    func dropTable(tableName:String) { // 移除table
-        var statement:OpaquePointer?
-        let query = "DROP TABLE \(tableName);" as NSString
-        defer {
-            semphore.signal()
-        }
-        semphore.wait()
-        if ( sqlite3_prepare_v2(self.db, query.utf8String, -1, &statement, nil) == SQLITE_OK ) {
-            if sqlite3_step(statement) == SQLITE_DONE {
-                print("Data delete Success!")
-            }
-            else {
-                print("Data is not deleted in table!")
-            }
-            sqlite3_finalize(statement)
-        }
-        else {
-            print("Query is not as per requirement")
-        }
-        
-    } // 移除table
-    
     func createDB()-> OpaquePointer? { // 建立 database
         // 若該路徑 沒有該檔案 系統會嘗試建立此檔案
         // 若該路徑 已經有檔案 單純連接database
@@ -61,6 +39,30 @@ class MyDataBase {
         }
     }
     
+    func dropTable(tableName:String) { // 移除table
+        var statement:OpaquePointer?
+        let query = "DROP TABLE \(tableName);" as NSString
+        defer {
+            semphore.signal()
+        }
+        semphore.wait()
+        if ( sqlite3_prepare_v2(self.db, query.utf8String, -1, &statement, nil) == SQLITE_OK ) {
+            if sqlite3_step(statement) == SQLITE_DONE {
+                print("Data delete Success!")
+            }
+            else {
+                print("Data is not deleted in table!")
+            }
+            sqlite3_finalize(statement)
+        }
+        else {
+            print("Query is not as per requirement")
+        }
+    } // 移除table
+}
+
+// 計算 query 指令
+extension MyDataBase {
     func executeQuery(query:String) {
         var statement:OpaquePointer?
         let q = query as NSString
@@ -84,7 +86,10 @@ class MyDataBase {
         let query = object.getUpdateQuery()
         executeQuery(query: query)
     }
+}
 
+// 讀取資訊
+extension MyDataBase {
     func read2Object<T:Codable>(query:String) -> [T] { // 下query 去取得物件資訊
         defer {
             semphore.signal()
@@ -154,4 +159,3 @@ class MyDataBase {
         return jsonString
     }
 }
-

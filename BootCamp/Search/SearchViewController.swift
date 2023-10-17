@@ -7,7 +7,6 @@
 
 import Foundation
 import UIKit
-
 class SearchViewController:CustomViewController {
     let searchBar = SearchBar()
     let tableView = UITableView()
@@ -32,7 +31,7 @@ class SearchViewController:CustomViewController {
         
         tableView.backgroundColor = .clear
         tableView.layer.borderWidth = 1
-        tableView.layer.borderColor = Theme.themeStlye.getTextColor().cgColor
+        tableView.layer.borderColor = userData.getSecondColor().cgColor
         tableView.separatorStyle = .none
         tableView.showsVerticalScrollIndicator = false
         tableView.register(SearchCell.self, forCellReuseIdentifier: "SearchCell")
@@ -71,7 +70,7 @@ class SearchViewController:CustomViewController {
     override func setThemeColor() {
         super.setThemeColor()
         searchBar.updateTheme()
-        tableView.layer.borderColor = Theme.themeStlye.getTextColor().cgColor
+        tableView.layer.borderColor = userData.getSecondColor().cgColor
         tableView.reloadData()
     }
     
@@ -123,11 +122,11 @@ extension SearchViewController:UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let item = viewModel.getData(indexPath: indexPath) else { return }
-        let url = item.ITuneData.trackViewURL
-        let viewController = ITuneDetailViewController()
-        viewController.url_string = url
-        navigationController?.pushViewController(viewController, animated: true)
+        guard let item = viewModel.getData(indexPath: indexPath),
+              let url = URL(string:item.ITuneData.trackViewURL)
+        else { return }
+    
+        UIApplication.shared.open(url)
     }
     
     @objc func readMoreClick(_ sender:UIButton ) {
@@ -147,6 +146,7 @@ extension SearchViewController:UITableViewDelegate, UITableViewDataSource {
         }
     }
 }
+    
 
 extension SearchViewController:SearchBarDelegate {
     func searchAction(_ input: String) {

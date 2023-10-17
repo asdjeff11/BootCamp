@@ -63,7 +63,7 @@ extension ChangeThemeViewController:UITableViewDelegate, UITableViewDataSource {
         cell.titleLabel.text = style.rawValue
         cell.selectionStyle = .none
         cell.setThemeStyle()
-        if ( Theme.themeStlye == style ) {
+        if ( userData.getThemeType() == style ) {
             cell.selectLogo.isHidden = false
         }
         
@@ -76,7 +76,7 @@ extension ChangeThemeViewController:UITableViewDelegate, UITableViewDataSource {
         }
         if  let text = cell.titleLabel.text,
             let style = Theme.ThemeStyle(rawValue: text) {
-            Theme.themeStlye = style
+            userData.updateThemeType(type: style)
             cell.selectLogo.isHidden = false
             allThemeUpdate()
         }

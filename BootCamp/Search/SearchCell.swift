@@ -139,13 +139,13 @@ class SearchCell:UITableViewCell {
     
     
     func setThemeColor() {
-        let textColor = Theme.themeStlye.getTextColor()
-        myView.layer.borderColor = textColor.cgColor
-        trackLabel.textColor = textColor
-        artistLabel.textColor = textColor
-        collectionLabel.textColor = textColor
-        longLabel.textColor = textColor
-        scriptionLabel.textColor = textColor
+        let secondColor = userData.getSecondColor()
+        myView.layer.borderColor = secondColor.cgColor
+        trackLabel.textColor = secondColor
+        artistLabel.textColor = secondColor
+        collectionLabel.textColor = secondColor
+        longLabel.textColor = secondColor
+        scriptionLabel.textColor = secondColor
     }
     
     required init?(coder: NSCoder) {
