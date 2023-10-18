@@ -9,9 +9,9 @@ import XCTest
 @testable import BootCamp
 
 final class BootCampTestAPI: XCTestCase {
-    var viewModel:SearchViewModel!
+    var presenter:SearchPresenter!
     override func setUp() async throws {
-        viewModel = SearchViewModel()
+        presenter = SearchPresenter()
     }
     
     func testSearchCondition() {
@@ -41,7 +41,7 @@ final class BootCampTestAPI: XCTestCase {
         let chooseURL = url_strings[0]
         let promise = expectation(description: "Completion handler invoked")
         var datas:[ITuneDataDetail]?
-        viewModel.fetchURLData(url_Str: chooseURL, finishCallBack: { (result:Result<ITuneResult,Error>) in
+        presenter.fetchURLData(url_Str: chooseURL, finishCallBack: { (result:Result<ITuneResult,Error>) in
             switch ( result ) {
             case .success(let result) :
                 datas = result.results
@@ -59,13 +59,13 @@ final class BootCampTestAPI: XCTestCase {
         let condition = SearchITuneCondition(term: "hello world", media: .電影)
         let promise = expectation(description: "Completion handler invoked")
         
-        viewModel.fetchKeyword(condition: condition)
-        viewModel.group.notify(queue: .main) {
+        presenter.fetchKeyword(condition: condition)
+        presenter.group.notify(queue: .main) {
             promise.fulfill()
         }
        
         wait(for: [promise], timeout: 10)
-        XCTAssert(viewModel.movies.isEmpty == false)
+        XCTAssert(presenter.movies.isEmpty == false)
     }
     
     

@@ -12,12 +12,11 @@ class CollectItemViewController:CustomViewController {
     lazy private var swipeView: SwipeView = {
         let swipeView = SwipeView(frame: CGRect(x: 0, y: 0, width: 500 * Theme.factor, height: 80 * Theme.factor))
         swipeView.commaSeperatedButtonTitles = "電影,音樂"
-        swipeView.backgroundColor = userData.getMainColor()
         swipeView.addTarget(self, action: #selector(swipeChange), for: .valueChanged) // 點擊 則刷新tableview
         return swipeView
     }()
     
-    let viewModel = CollectItemViewModel()
+    let presenter = CollectItemPresenter()
     override func viewDidLoad() {
         super.viewDidLoad()
         setUp()
@@ -26,12 +25,13 @@ class CollectItemViewController:CustomViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        viewModel.getData()
+        presenter.getData()
+        swipeView.updateThemeStyle()
         tableView.reloadData()
     }
     
     @objc func swipeChange() {
-        viewModel.updateType(type: (swipeView.selectIndex == 0) ? .電影 : .音樂)
+        presenter.updateType(type: (swipeView.selectIndex == 0) ? .電影 : .音樂)
         tableView.reloadData()
     }
 }
@@ -51,6 +51,7 @@ extension CollectItemViewController {
         
         tableView.delegate = self
         tableView.dataSource = self
+        
     }
     
     func layout() {
@@ -71,7 +72,7 @@ extension CollectItemViewController {
 
 extension CollectItemViewController:UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        viewModel.getItemSize()
+        presenter.getItemSize()
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -79,7 +80,7 @@ extension CollectItemViewController:UITableViewDelegate, UITableViewDataSource {
     }
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "CollectItemCell") as? CollectItemCell,
-              let data = viewModel.getData(indexPath: indexPath) else {
+              let data = presenter.getData(indexPath: indexPath) else {
             return UITableViewCell()
         }
         
@@ -91,7 +92,7 @@ extension CollectItemViewController:UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let item = viewModel.getData(indexPath: indexPath),
+        guard let item = presenter.getData(indexPath: indexPath),
               let url = URL(string:item.trackViewURL)
         else { return }
     
@@ -101,7 +102,7 @@ extension CollectItemViewController:UITableViewDelegate, UITableViewDataSource {
     @objc func removeCollectClick(_ sender:UIButton) {
         guard let cell = sender.superview?.superview as? CollectItemCell else { return }
         if let indexPath = tableView.indexPath(for: cell) {
-            viewModel.removeData(indexPath:indexPath)
+            presenter.removeData(indexPath:indexPath)
             tableView.deleteRows(at: [indexPath], with: .automatic)
         }
     }

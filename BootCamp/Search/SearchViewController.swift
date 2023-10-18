@@ -10,7 +10,7 @@ import UIKit
 class SearchViewController:CustomViewController {
     let searchBar = SearchBar()
     let tableView = UITableView(frame: .zero,style: .grouped)
-    let viewModel = SearchViewModel()
+    let presenter = SearchPresenter()
     var isLoading = false
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -20,7 +20,7 @@ class SearchViewController:CustomViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        viewModel.refreshCollect()
+        presenter.refreshCollect()
         tableView.reloadData() // 確保追蹤的資訊是正常的
     }
     
@@ -85,7 +85,7 @@ extension SearchViewController:UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return (section == 0 ? viewModel.getMovieSize() : viewModel.getMusicSize()) * 2 // * 2 is space
+        return (section == 0 ? presenter.getMovieSize() : presenter.getMusicSize()) * 2 // * 2 is space
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -126,7 +126,7 @@ extension SearchViewController:UITableViewDelegate, UITableViewDataSource {
         
         
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "SearchCell") as? SearchCell,
-              let item = viewModel.getData(type: ( indexPath.section == 0 ) ? .電影 : .音樂 , row: indexPath.row / 2)
+              let item = presenter.getData(type: ( indexPath.section == 0 ) ? .電影 : .音樂 , row: indexPath.row / 2)
         else { return UITableViewCell() }
         
         cell.IsMovie = ( indexPath.section == MediaType.電影.rawValue )
@@ -151,7 +151,7 @@ extension SearchViewController:UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let item = viewModel.getData(type: ( indexPath.section == 0 ) ? .電影:.音樂, row: indexPath.row / 2),
+        guard let item = presenter.getData(type: ( indexPath.section == 0 ) ? .電影:.音樂, row: indexPath.row / 2),
               let url = URL(string:item.ITuneData.trackViewURL)
         else { return }
     
@@ -166,7 +166,7 @@ extension SearchViewController:UITableViewDelegate, UITableViewDataSource {
     @objc func readMoreClick(_ sender:UIButton ) {
         guard let cell = sender.superview?.superview as? SearchCell else { return }
         if let indexPath = tableView.indexPath(for: cell) {
-            viewModel.setFolder(type: ( indexPath.section == 0 ) ? .電影:.音樂, row: indexPath.row / 2)
+            presenter.setFolder(type: ( indexPath.section == 0 ) ? .電影:.音樂, row: indexPath.row / 2)
             tableView.scrollToRow(at: indexPath, at: .none, animated: true)
             tableView.reloadRows(at: [indexPath], with: .automatic)
         }
@@ -175,7 +175,7 @@ extension SearchViewController:UITableViewDelegate, UITableViewDataSource {
     @objc func collectClick(_ sender:UIButton) {
         guard let cell = sender.superview?.superview as? SearchCell else { return }
         if let indexPath = tableView.indexPath(for: cell) {
-            viewModel.setCollect(type: ( indexPath.section == 0 ) ? .電影:.音樂, row: indexPath.row / 2)
+            presenter.setCollect(type: ( indexPath.section == 0 ) ? .電影:.音樂, row: indexPath.row / 2)
             tableView.reloadRows(at: [indexPath], with: .automatic)
         }
     }
@@ -189,7 +189,7 @@ extension SearchViewController:SearchBarDelegate {
             return
         }
         
-        if ( input == viewModel.getLastKeyword() ) { return } // 與上次相同關鍵字
+        if ( input == presenter.getLastKeyword() ) { return } // 與上次相同關鍵字
         
         for cell in tableView.visibleCells {
             if let cell = cell as? SearchCell {
@@ -201,7 +201,7 @@ extension SearchViewController:SearchBarDelegate {
         loading(isLoading: &isLoading)
         tableView.setContentOffset(.zero, animated: false)
         
-        viewModel.fetch(input,callBack:{ [weak self](errorMsg) in
+        presenter.fetch(input,callBack:{ [weak self](errorMsg) in
             guard let self = self else { return }
             if ( errorMsg != "" ) {
                 self.showAlert(alertText: "撈取資料錯誤", alertMessage: errorMsg)

@@ -19,8 +19,6 @@ class SwipeView:UIControl {
         }
     }
     
-    let selectColor:UIColor = .systemGray
-    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -37,16 +35,13 @@ class SwipeView:UIControl {
             view.removeFromSuperview()
         }
         
-        let detailColor = userData.getSecondColor()
         let buttonsTitles = commaSeperatedButtonTitles.components(separatedBy: ",")
         for title in buttonsTitles {
             let button = UIButton.init(type:.system)
-            button.layer.borderColor = detailColor.cgColor
             button.layer.borderWidth = 1
             button.titleLabel?.font = Theme.labelFont
             button.backgroundColor = .clear
             button.setTitle(title, for: .normal)
-            button.setTitleColor(detailColor, for: .normal)
             button.addTarget(self, action: #selector(buttonTapped(_:)), for: .touchUpInside)
             buttons.append(button)
         }
@@ -70,7 +65,17 @@ class SwipeView:UIControl {
             stackView.leftAnchor.constraint(equalTo: self.leftAnchor),
             stackView.rightAnchor.constraint(equalTo: self.rightAnchor)
         ])
+    }
+    
+    func updateThemeStyle() {
+        let mainColor = userData.getMainColor()
+        let secondColor = userData.getSecondColor()
+        for button in buttons {
+            button.layer.borderColor = secondColor.cgColor
+            button.setTitleColor(secondColor, for: .normal)
+        }
         
+        backgroundColor = mainColor
     }
     
     @objc func buttonTapped(_ button:UIButton) {
