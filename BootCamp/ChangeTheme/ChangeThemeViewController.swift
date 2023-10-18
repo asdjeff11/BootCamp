@@ -41,7 +41,7 @@ class ChangeThemeViewController:CustomViewController {
     override func setThemeColor() {
         UIView.animate(withDuration: 0.3, animations: {
             super.setThemeColor()
-            self.tableView.reloadData()
+            self.tableView.reloadData() // 因為要更新cell的顏色 所以整個reload 
         })
     }
 }
@@ -63,9 +63,8 @@ extension ChangeThemeViewController:UITableViewDelegate, UITableViewDataSource {
         cell.titleLabel.text = style.rawValue
         cell.selectionStyle = .none
         cell.setThemeStyle()
-        if ( userData.getThemeType() == style ) {
-            cell.selectLogo.isHidden = false
-        }
+        cell.selectLogo.isHidden = !( userData.getThemeType() == style )
+        
         
         return cell
     }
@@ -77,27 +76,9 @@ extension ChangeThemeViewController:UITableViewDelegate, UITableViewDataSource {
         if  let text = cell.titleLabel.text,
             let style = Theme.ThemeStyle(rawValue: text) {
             userData.updateThemeType(type: style)
-            cell.selectLogo.isHidden = false
             allThemeUpdate()
         }
-        
     }
-    
-    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
-        if let cell = cell as? ChangeThemeCell {
-            if ( cell.selectLogo.isHidden == false ) {
-                tableView.selectRow(at: indexPath, animated: false, scrollPosition: .none)
-            }
-        }
-    }
-    
-    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
-        guard let cell = tableView.cellForRow(at: indexPath) as? ChangeThemeCell else {
-            return
-        }
-        cell.selectLogo.isHidden = true
-    }
-    
 }
 
 extension ChangeThemeViewController {

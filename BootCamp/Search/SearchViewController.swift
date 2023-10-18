@@ -124,12 +124,13 @@ extension SearchViewController:UITableViewDelegate, UITableViewDataSource {
             return spaceCell
         }
         
+        let type:MediaType = ( indexPath.section == 0 ) ? .電影 : .音樂
         
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "SearchCell") as? SearchCell,
-              let item = presenter.getData(type: ( indexPath.section == 0 ) ? .電影 : .音樂 , row: indexPath.row / 2)
+              let item = presenter.getData(type: type, row: indexPath.row / 2)
         else { return UITableViewCell() }
         
-        cell.IsMovie = ( indexPath.section == MediaType.電影.rawValue )
+        cell.IsMovie = ( type == .電影)
         cell.setData(searchModel: item)
         cell.readMoreButton.addTarget(self, action: #selector(readMoreClick(_:)), for: .touchUpInside)
         cell.collectButton.addTarget(self, action: #selector(collectClick(_:)), for: .touchUpInside)

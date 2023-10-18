@@ -14,8 +14,9 @@ class UserData {
     private var themeType:Theme.ThemeStyle = .LightTheme
     
     init() {
-        if let themeStyle = userDefault.value(forKey: "ThemeStyle") as? String {
-            themeType = themeStyle == "深色主題" ? .DarkTheme : .LightTheme
+        if let themeStyle = userDefault.value(forKey: "ThemeStyle") as? String ,
+           let type = Theme.ThemeStyle(rawValue: themeStyle) {
+            themeType = type
         }
     }
     

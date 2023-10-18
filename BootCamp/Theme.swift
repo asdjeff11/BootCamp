@@ -12,12 +12,17 @@ class Theme {
     enum ThemeStyle:String, CaseIterable {
         case DarkTheme = "深色主題"
         case LightTheme = "淺色主題"
-        
+        case yellowTheme = "黃色主題"
+        case blueTheme = "藍色主題"
         func getSecondColor()->UIColor {
             switch ( self ) {
             case .DarkTheme :
                 return .white
             case .LightTheme :
+                return .black
+            case .yellowTheme :
+                return .black
+            case .blueTheme :
                 return .black
             }
         }
@@ -28,6 +33,10 @@ class Theme {
                 return .gray
             case .LightTheme :
                 return .white
+            case .yellowTheme :
+                return UIColor(hex: 0xF5F5DC)
+            case .blueTheme :
+                return UIColor(hex: 0x87CEEB)
             }
         }
         
