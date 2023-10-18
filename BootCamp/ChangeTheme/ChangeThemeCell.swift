@@ -38,7 +38,7 @@ class ChangeThemeCell:UITableViewCell {
     func setThemeStyle() {
         let secondColor = userData.getSecondColor()
         selectLogo.tintColor = secondColor
-        self.layer.borderColor = secondColor.cgColor
+        layer.borderColor = secondColor.cgColor
         titleLabel.textColor = secondColor
     }
     

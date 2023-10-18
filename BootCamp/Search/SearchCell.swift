@@ -67,7 +67,6 @@ class SearchCell:UITableViewCell {
         
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        backgroundColor = .clear
         layout()
         
     }
@@ -131,8 +130,6 @@ class SearchCell:UITableViewCell {
         }
         
         self.isCollect = searchModel.isCollect
-        
-        
     }
     
     

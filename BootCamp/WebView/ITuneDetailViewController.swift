@@ -44,6 +44,7 @@ class ITuneDetailViewController:UIViewController {
         super.viewDidLoad()
         setUp()
         layout()
+        view.backgroundColor = userData.getMainColor()
         if let url_str = url_string,
            let url = URL(string: url_str) {
             let urlRequest = URLRequest(url: url)
