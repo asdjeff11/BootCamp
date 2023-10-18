@@ -132,9 +132,7 @@ class SearchCell:UITableViewCell {
         
         self.isCollect = searchModel.isCollect
         
-        self.cellImageView.sd_setImage(with: URL(string: detail.imageURL),
-                                       placeholderImage: #imageLiteral(resourceName: "about.png"),
-                                       options: [.allowInvalidSSLCertificates])
+        
     }
     
     
@@ -146,6 +144,8 @@ class SearchCell:UITableViewCell {
         collectionLabel.textColor = secondColor
         longLabel.textColor = secondColor
         scriptionLabel.textColor = secondColor
+        
+        backgroundColor = userData.getMainColor()
     }
     
     required init?(coder: NSCoder) {

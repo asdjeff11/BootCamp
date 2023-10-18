@@ -39,6 +39,9 @@
 		D7564FD22AD7CC8B005247D6 /* MyTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7564FD12AD7CC8B005247D6 /* MyTextField.swift */; };
 		D7564FD42AD7D954005247D6 /* PersonalSettingButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7564FD32AD7D954005247D6 /* PersonalSettingButton.swift */; };
 		D7564FD72AD7E1C8005247D6 /* ITuneDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7564FD62AD7E1C8005247D6 /* ITuneDetailViewController.swift */; };
+		D7CA76882ADE79680064B4BE /* BootCampTestAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7CA76872ADE79680064B4BE /* BootCampTestAPI.swift */; };
+		D7CA768A2ADE89160064B4BE /* SearchViewTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7CA76892ADE89160064B4BE /* SearchViewTest.swift */; };
+		D7CA768C2ADE90750064B4BE /* CollectItemTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7CA768B2ADE90750064B4BE /* CollectItemTest.swift */; };
 		D7D6CC6C2ADD04F900DED46E /* CollectItemViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7D6CC6B2ADD04F900DED46E /* CollectItemViewController.swift */; };
 		D7D6CC6E2ADD058B00DED46E /* CollectItemViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7D6CC6D2ADD058B00DED46E /* CollectItemViewModel.swift */; };
 		D7D6CC722ADD082800DED46E /* SwipeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = D7D6CC712ADD082800DED46E /* SwipeView.swift */; };
@@ -111,6 +114,9 @@
 		D7564FD12AD7CC8B005247D6 /* MyTextField.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyTextField.swift; sourceTree = "<group>"; };
 		D7564FD32AD7D954005247D6 /* PersonalSettingButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonalSettingButton.swift; sourceTree = "<group>"; };
 		D7564FD62AD7E1C8005247D6 /* ITuneDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ITuneDetailViewController.swift; sourceTree = "<group>"; };
+		D7CA76872ADE79680064B4BE /* BootCampTestAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BootCampTestAPI.swift; sourceTree = "<group>"; };
+		D7CA76892ADE89160064B4BE /* SearchViewTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchViewTest.swift; sourceTree = "<group>"; };
+		D7CA768B2ADE90750064B4BE /* CollectItemTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectItemTest.swift; sourceTree = "<group>"; };
 		D7D6CC6B2ADD04F900DED46E /* CollectItemViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectItemViewController.swift; sourceTree = "<group>"; };
 		D7D6CC6D2ADD058B00DED46E /* CollectItemViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CollectItemViewModel.swift; sourceTree = "<group>"; };
 		D7D6CC712ADD082800DED46E /* SwipeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwipeView.swift; sourceTree = "<group>"; };
@@ -261,6 +267,9 @@
 			isa = PBXGroup;
 			children = (
 				D7564F8D2AD772D6005247D6 /* BootCampTests.swift */,
+				D7CA76872ADE79680064B4BE /* BootCampTestAPI.swift */,
+				D7CA76892ADE89160064B4BE /* SearchViewTest.swift */,
+				D7CA768B2ADE90750064B4BE /* CollectItemTest.swift */,
 			);
 			path = BootCampTests;
 			sourceTree = "<group>";
@@ -290,7 +299,6 @@
 			isa = PBXGroup;
 			children = (
 				D7564FAE2AD77B8F005247D6 /* CustomViewController.swift */,
-				D7D6CC712ADD082800DED46E /* SwipeView.swift */,
 			);
 			path = Custom;
 			sourceTree = "<group>";
@@ -311,6 +319,7 @@
 		D7564FB52AD781D9005247D6 /* PublicView */ = {
 			isa = PBXGroup;
 			children = (
+				D7D6CC712ADD082800DED46E /* SwipeView.swift */,
 				D7564FB62AD781F6005247D6 /* SpinnerViewController.swift */,
 				D7564FD12AD7CC8B005247D6 /* MyTextField.swift */,
 			);
@@ -648,7 +657,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D7CA768A2ADE89160064B4BE /* SearchViewTest.swift in Sources */,
+				D7CA768C2ADE90750064B4BE /* CollectItemTest.swift in Sources */,
 				D7564F8E2AD772D6005247D6 /* BootCampTests.swift in Sources */,
+				D7CA76882ADE79680064B4BE /* BootCampTestAPI.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -733,7 +745,7 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -748,7 +760,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
@@ -796,7 +808,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
-				ENABLE_USER_SCRIPT_SANDBOXING = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GCC_C_LANGUAGE_STANDARD = gnu17;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
@@ -805,7 +817,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
@@ -885,8 +897,10 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 5T5FLQM6AH;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = BootCampTrain.BootCampTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -905,8 +919,10 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 5T5FLQM6AH;
+				ENABLE_USER_SCRIPT_SANDBOXING = NO;
 				GENERATE_INFOPLIST_FILE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = BootCampTrain.BootCampTests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -925,9 +941,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = BootCampTrain.BootCampUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -943,9 +961,11 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.4;
 				MARKETING_VERSION = 1.0;
 				PRODUCT_BUNDLE_IDENTIFIER = BootCampTrain.BootCampUITests;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				SWIFT_EMIT_LOC_STRINGS = NO;
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";

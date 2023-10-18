@@ -62,8 +62,6 @@ extension PersonalDataViewController {
         
         let collectItemGesture = UITapGestureRecognizer(target: self, action:  #selector(collectViewIsClick))
         collectItemView.addGestureRecognizer(collectItemGesture)
-        
-        //collectItemView.addGestureRecognizer(viewGesture)
     }
     
     @objc func themeViewIsClick() {

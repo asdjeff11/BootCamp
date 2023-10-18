@@ -16,29 +16,47 @@ class MainTabBarViewController:UITabBarController {
         let iconSize = CGSize(width: 50 * Theme.factor, height: 50 * Theme.factor)
         let searchView = SearchViewController()
         let searchImage = UIImage.scaleImage(image: #imageLiteral(resourceName: "search.png"), newSize: iconSize)
-        searchView.tabBarItem.title = nil
         searchView.tabBarItem.image = searchImage
         let searchNavigation = UINavigationController(rootViewController: searchView)
         
         
         let personalDataView = PersonalDataViewController()
         let personalDataImage = UIImage.scaleImage(image:#imageLiteral(resourceName: "user.png") , newSize: iconSize)
-        personalDataView.tabBarItem.title = nil
         personalDataView.tabBarItem.image = personalDataImage
         let personalDataNavigation = UINavigationController(rootViewController: personalDataView)
         
         viewControllers = [searchNavigation,personalDataNavigation]
+        
+        setTabBarStyle()
+    }
+    
+    private func setTabBarStyle() {
         let customTabBar = UITabBar.appearance()
-        if #available(iOS 13.0, *) {
-            let tabBarAppearance = UITabBarAppearance()
-            tabBarAppearance.backgroundColor = .systemGray5
-            customTabBar.standardAppearance = tabBarAppearance
-            if #available(iOS 15.0, *) {
-                customTabBar.scrollEdgeAppearance = tabBarAppearance
-            }
+        // set backGround
+        let backGroundColor:UIColor = .systemGray5
+        let iconColor:UIColor = .gray
+        
+        if #available(iOS 15.0, *) {
+            let appearance = UITabBarAppearance()
+
+            appearance.backgroundColor = backGroundColor
+            appearance.stackedLayoutAppearance.normal.iconColor = iconColor
+            appearance.stackedLayoutAppearance.normal.titleTextAttributes = [.foregroundColor: iconColor]
+
+            customTabBar.standardAppearance = appearance
+            customTabBar.scrollEdgeAppearance = appearance
         }
         else {
-            tabBar.barTintColor = .systemGray5
+            customTabBar.backgroundColor = backGroundColor
+            customTabBar.unselectedItemTintColor = iconColor
         }
+        
+        // set selectBackGround
+        let numberOfItems = CGFloat(tabBar.items!.count)
+        let tabBarItemSize = CGSize(width: tabBar.frame.width / numberOfItems, height: tabBar.frame.height)
+        let selectBackground = UIColor.white.withAlphaComponent(0.8).image(tabBarItemSize)
+        tabBar.selectionIndicatorImage = selectBackground
+        
+        tabBar.tintColor = .gray
     }
 }

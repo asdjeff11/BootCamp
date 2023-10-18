@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 class SearchViewController:CustomViewController {
     let searchBar = SearchBar()
-    let tableView = UITableView()
+    let tableView = UITableView(frame: .zero,style: .grouped)
     let viewModel = SearchViewModel()
     var isLoading = false
     override func viewDidLoad() {
@@ -35,6 +35,8 @@ class SearchViewController:CustomViewController {
         tableView.separatorStyle = .none
         tableView.showsVerticalScrollIndicator = false
         tableView.register(SearchCell.self, forCellReuseIdentifier: "SearchCell")
+        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "blank")
+        
         tableView.delegate = self
         tableView.dataSource = self
         
@@ -70,6 +72,7 @@ class SearchViewController:CustomViewController {
     override func setThemeColor() {
         super.setThemeColor()
         searchBar.updateTheme()
+        tableView.backgroundColor = userData.getMainColor()
         tableView.layer.borderColor = userData.getSecondColor().cgColor
         tableView.reloadData()
     }
@@ -78,15 +81,20 @@ class SearchViewController:CustomViewController {
 
 extension SearchViewController:UITableViewDelegate, UITableViewDataSource {
     func numberOfSections(in tableView: UITableView) -> Int {
-        return 2 // movie and music
+        return MediaType.allCases.count // movie and music
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return section == 0 ? viewModel.getMovieSize() : viewModel.getMusicSize()
+        return (section == 0 ? viewModel.getMovieSize() : viewModel.getMusicSize()) * 2 // * 2 is space
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return UITableView.automaticDimension
+        if ( indexPath.row % 2 == 0 ) { // space
+            return 10 * Theme.factor
+        }
+        else {
+            return UITableView.automaticDimension
+        }
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -109,8 +117,16 @@ extension SearchViewController:UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        if ( indexPath.row % 2 == 0 ) { // 間隔
+            let spaceCell = UITableViewCell(style: .default, reuseIdentifier: "blank")
+            spaceCell.backgroundColor = UIColor.clear
+            spaceCell.isUserInteractionEnabled = false
+            return spaceCell
+        }
+        
+        
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "SearchCell") as? SearchCell,
-              let item = viewModel.getData(indexPath: indexPath)
+              let item = viewModel.getData(type: ( indexPath.section == 0 ) ? .電影 : .音樂 , row: indexPath.row / 2)
         else { return UITableViewCell() }
         
         cell.IsMovie = ( indexPath.section == MediaType.電影.rawValue )
@@ -118,21 +134,39 @@ extension SearchViewController:UITableViewDelegate, UITableViewDataSource {
         cell.readMoreButton.addTarget(self, action: #selector(readMoreClick(_:)), for: .touchUpInside)
         cell.collectButton.addTarget(self, action: #selector(collectClick(_:)), for: .touchUpInside)
         cell.setThemeColor()
+        
+        // update image
+        cell.cellImageView.sd_setImage( with: URL(string: item.ITuneData.imageURL),
+                                        placeholderImage: #imageLiteral(resourceName: "about.png"),
+                                        options: [.allowInvalidSSLCertificates,.retryFailed,.continueInBackground])
+         { [weak self] (image,error,cache,url) in
+             guard let self = self else { return }
+             if error != nil && self.tableView.visibleCells.contains(cell) { // 當前顯示的重撈就好  未來如果有需要 會再次呼叫到 cellForRowAt 撈取
+                 self.tableView.reloadRows(at: [indexPath], with: .none)
+             }
+         }
+        
+        
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let item = viewModel.getData(indexPath: indexPath),
+        guard let item = viewModel.getData(type: ( indexPath.section == 0 ) ? .電影:.音樂, row: indexPath.row / 2),
               let url = URL(string:item.ITuneData.trackViewURL)
         else { return }
     
         UIApplication.shared.open(url)
+        tableView.deselectRow(at: indexPath, animated: true)
+    }
+    
+    func tableView(_ tableView: UITableView, didDeselectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
     }
     
     @objc func readMoreClick(_ sender:UIButton ) {
         guard let cell = sender.superview?.superview as? SearchCell else { return }
         if let indexPath = tableView.indexPath(for: cell) {
-            viewModel.setFolder(indexPath: indexPath)
+            viewModel.setFolder(type: ( indexPath.section == 0 ) ? .電影:.音樂, row: indexPath.row / 2)
             tableView.scrollToRow(at: indexPath, at: .none, animated: true)
             tableView.reloadRows(at: [indexPath], with: .automatic)
         }
@@ -141,7 +175,7 @@ extension SearchViewController:UITableViewDelegate, UITableViewDataSource {
     @objc func collectClick(_ sender:UIButton) {
         guard let cell = sender.superview?.superview as? SearchCell else { return }
         if let indexPath = tableView.indexPath(for: cell) {
-            viewModel.setCollect(indexPath: indexPath)
+            viewModel.setCollect(type: ( indexPath.section == 0 ) ? .電影:.音樂, row: indexPath.row / 2)
             tableView.reloadRows(at: [indexPath], with: .automatic)
         }
     }
@@ -154,6 +188,8 @@ extension SearchViewController:SearchBarDelegate {
             showAlert(alertText: "提醒", alertMessage: "請輸入搜尋條件")
             return
         }
+        
+        if ( input == viewModel.getLastKeyword() ) { return } // 與上次相同關鍵字
         
         for cell in tableView.visibleCells {
             if let cell = cell as? SearchCell {

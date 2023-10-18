@@ -12,7 +12,7 @@ class CollectItemViewController:CustomViewController {
     lazy private var swipeView: SwipeView = {
         let swipeView = SwipeView(frame: CGRect(x: 0, y: 0, width: 500 * Theme.factor, height: 80 * Theme.factor))
         swipeView.commaSeperatedButtonTitles = "電影,音樂"
-        swipeView.backgroundColor = .clear
+        swipeView.backgroundColor = userData.getMainColor()
         swipeView.addTarget(self, action: #selector(swipeChange), for: .valueChanged) // 點擊 則刷新tableview
         return swipeView
     }()
@@ -48,6 +48,7 @@ extension CollectItemViewController {
         tableView.separatorStyle = .none
         tableView.showsVerticalScrollIndicator = false
         tableView.register(CollectItemCell.self, forCellReuseIdentifier: "CollectItemCell")
+        
         tableView.delegate = self
         tableView.dataSource = self
     }

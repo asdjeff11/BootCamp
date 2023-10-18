@@ -19,7 +19,6 @@ class SearchBar:UIView {
     init() {
         textField = MyTextField()
         textField.backgroundColor = .clear
-        textField.placeholder = "搜尋"
         button = UIButton()
         super.init(frame: .zero)
         button.addTarget(self, action: #selector(clickAct), for: .touchUpInside)
@@ -44,11 +43,16 @@ class SearchBar:UIView {
     
     func updateTheme() {
         let secondColor = userData.getSecondColor()
-        
+        let placeHolderColor = secondColor.withAlphaComponent(0.3)
         // set textField
         textField.layer.borderColor = secondColor.cgColor
         textField.layer.borderWidth = 1
         textField.textColor = secondColor
+        textField.attributedPlaceholder = NSAttributedString(
+            string: "搜尋",
+            attributes: [NSAttributedString.Key.foregroundColor: placeHolderColor]
+        )
+
         
         let img = UIImage.scaleImage(image: #imageLiteral(resourceName: "search.png"), newSize: CGSize(width: 70 * Theme.factor, height: 70 * Theme.factor))
         let buttonImg = img.withRenderingMode(.alwaysTemplate)

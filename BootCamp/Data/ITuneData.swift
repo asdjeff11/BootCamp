@@ -7,7 +7,7 @@
 
 import Foundation
 
-enum MediaType:Int {
+enum MediaType:Int,CaseIterable {
     case 電影 = 0
     case 音樂 = 1
     
@@ -26,7 +26,7 @@ struct ITuneResult:Codable {
     var results:[ITuneDataDetail]
 }
 
-struct ITuneDataDetail:Codable,Hashable {
+struct ITuneDataDetail:Hashable {
     var trackId:Int
     var trackName:String // 電影
     var artistName:String // 作者
@@ -58,10 +58,16 @@ struct ITuneDataDetail:Codable,Hashable {
     }
 }
 
-extension ITuneDataDetail {
+extension ITuneDataDetail:Codable {
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
-        trackId = try values.decodeIfPresent(Int.self, forKey: .trackId) ?? -1
+        // 至少要有trackId
+        guard let decode_trackId = try values.decodeIfPresent(Int.self, forKey: .trackId)
+        else {
+            throw DecodingError.dataCorruptedError(forKey: .trackId, in: values, debugDescription: "trackId error")
+        }
+        
+        trackId = decode_trackId
         trackName = try values.decodeIfPresent(String.self, forKey: .trackName) ?? ""
         artistName = try values.decodeIfPresent(String.self, forKey: .artistName) ?? ""
         collectionName = try values.decodeIfPresent(String.self, forKey: .collectionName) ?? ""
@@ -76,7 +82,7 @@ extension ITuneDataDetail {
 struct SearchITuneCondition {
     var term:String
     //var country:String?
-    var media:MediaType = .電影
+    var media:MediaType = .音樂
     func getUrl(offset:Int? = nil, limit:Int? = nil)->String {
         var url = "https://itunes.apple.com/search?"
         url += "term=\(term)"

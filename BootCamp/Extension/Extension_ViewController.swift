@@ -9,11 +9,9 @@ import Foundation
 import UIKit
 
 extension UIViewController {
-    
-    
     func setUpNavigation(title:String,backButtonVisit:Bool = false) {
         self.title = title
-        
+        self.tabBarItem.title = nil
         let secondColor:UIColor = userData.getSecondColor()
         let backColor:UIColor = UIColor(hex:0xAECFCC)
         let fontStyle = UIFont(name:"Helvetica Neue", size:25) ?? UIFont()
@@ -58,12 +56,10 @@ extension UIViewController {
         }
        
         self.navigationItem.leftBarButtonItems = array
-       
     }
     
     
     @objc func viewWillTerminate() {
-        
     }
     
     @objc func leftButtonAction() {
@@ -132,15 +128,6 @@ extension UIViewController {
         if let taskID = taskID {
             UIApplication.shared.endBackgroundTask(taskID)
         }
-    }
-    
-    // 重載整個頁面
-    func reloadViewFromNib() {
-        NotificationCenter.default.removeObserver(self)
-        let parent = view.superview
-        view.removeFromSuperview()
-        view = nil
-        parent?.addSubview(view) // This line causes the view to be reloaded
     }
 }
 

@@ -13,6 +13,7 @@ class SearchViewModel {
 //        case urlError
 //        case responseError
 //    }
+    private var keyword = "" // 上次搜尋紀錄
     var movies = [SearchModel]()
     var musics = [SearchModel]()
     var errorMessages = Array(repeating: "", count: 2) // [0]:movie , [1]:music
@@ -28,21 +29,20 @@ extension SearchViewModel {
     // 啟動撈取事件
     func fetch(_ keyword:String,callBack:@escaping ((_:String)->())) {
         initData()
-        DispatchQueue.global(qos: .background).async {
-            // fetch
-            self.fetchKeyword(condition:SearchITuneCondition(term:keyword,media: .電影))
-            self.fetchKeyword(condition: SearchITuneCondition(term:keyword,media: .音樂))
-            
-            self.group.wait()
-            DispatchQueue.main.async { [weak self] in
-                guard let self = self else { return }
-                callBack(self.calculateErrorMsg())
-            }
+        self.keyword = keyword
+        
+        // fetch
+        self.fetchKeyword(condition:SearchITuneCondition(term:keyword,media: .電影))
+        self.fetchKeyword(condition: SearchITuneCondition(term:keyword,media: .音樂))
+        
+        self.group.notify(queue: .main) { [weak self] in
+            guard let self = self else { return }
+            callBack(self.calculateErrorMsg())
         }
     }
     
     // 根據條件 撈取資訊
-    private func fetchKeyword(condition:SearchITuneCondition) {
+    func fetchKeyword(condition:SearchITuneCondition) {
         let errorIndex = condition.media == .電影 ? 0 : 1
         group.enter()
         self.fetchURLData(url_Str: condition.getUrl(), finishCallBack:{ (result:Result<ITuneResult,Error>) in
@@ -77,24 +77,22 @@ extension SearchViewModel {
 // cell 按鈕觸發事件
 extension SearchViewModel {
     // 0: movie , 1: music
-    func setFolder(indexPath:IndexPath) {
-        if ( indexPath.section == 0 ) {
-            self.movies[indexPath.row].isFolder = !self.movies[indexPath.row].isFolder
-        }
-        else {
-            self.musics[indexPath.row].isFolder = !self.musics[indexPath.row].isFolder
+    func setFolder(type:MediaType, row:Int) {
+        switch ( type ) {
+        case .電影 :
+            self.movies[row].isFolder = !self.movies[row].isFolder
+        case .音樂 :
+            self.musics[row].isFolder = !self.musics[row].isFolder
         }
     }
     
-    func setCollect(indexPath:IndexPath) {
+    func setCollect(type:MediaType, row:Int)  {
         var data:SearchModel
-        switch ( indexPath.section ) {
-        case 0 :
-            data = movies[indexPath.row]
-        case 1 :
-            data = musics[indexPath.row]
-        default :
-            return
+        switch ( type ) {
+        case .電影 :
+            data = movies[row]
+        case .音樂 :
+            data = musics[row]
         }
         
         if ( data.isCollect ) { // 原本追蹤
@@ -118,14 +116,27 @@ extension SearchViewModel {
         movies.count
     }
     
-    func getData(indexPath:IndexPath)->SearchModel? {
-        let array = (indexPath.section == MediaType.電影.rawValue) ? movies : musics
-        if ( array.count > indexPath.row ) {
-            return array[indexPath.row]
+    func getData(type:MediaType, row:Int)->SearchModel? {
+        var array = [SearchModel]()
+        switch ( type ) {
+        case .電影 :
+            array = movies
+        case .音樂 :
+            array = musics
+        }
+        
+        if ( array.count > row && row >= 0 ) {
+            return array[row]
         }
         else { // 降低 index out of range 的可能性
             return nil
         }
+    }
+}
+
+extension SearchViewModel {
+    func getLastKeyword()-> String {
+        return keyword
     }
 }
 

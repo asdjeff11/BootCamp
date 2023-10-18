@@ -54,7 +54,7 @@ class PersonalSettingButton:UIView {
     
     func updateColor() {
         let secondColor = userData.getSecondColor()
-        
+        self.backgroundColor = userData.getMainColor()
         self.layer.borderColor = secondColor.cgColor
         myTitleLabel.textColor = secondColor
         myContentLabel.textColor = secondColor

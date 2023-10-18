@@ -7,208 +7,48 @@
       <BreakpointProxy
          BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
          <BreakpointContent
-            uuid = "68636A61-84F7-4598-9CD4-C61E32CFA3DB"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "BootCamp/WebView/ITuneDetailViewController.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "129"
-            endingLineNumber = "129"
-            landmarkName = "webView(_:didFailProvisionalNavigation:withError:)"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "68636A61-84F7-4598-9CD4-C61E32CFA3DB - cc6bcc764555ff69"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "BootCamp.ITuneDetailViewController.webView(_: __C.WKWebView, didFailProvisionalNavigation: Swift.Optional&lt;__C.WKNavigation&gt;, withError: Swift.Error) -&gt; ()"
-                  moduleName = "BootCamp"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/esb23904/Desktop/BootCamp/BootCamp/WebView/ITuneDetailViewController.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "134"
-                  endingLineNumber = "134"
-                  offsetFromSymbolStart = "970">
-               </Location>
-               <Location
-                  uuid = "68636A61-84F7-4598-9CD4-C61E32CFA3DB - cc6bcc764555ffed"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "BootCamp.ITuneDetailViewController.webView(_: __C.WKWebView, didFailProvisionalNavigation: Swift.Optional&lt;__C.WKNavigation&gt;, withError: Swift.Error) -&gt; ()"
-                  moduleName = "BootCamp"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/esb23904/Desktop/BootCamp/BootCamp/WebView/ITuneDetailViewController.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "130"
-                  endingLineNumber = "130"
-                  offsetFromSymbolStart = "970">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "14EBF33E-CE23-4641-8CDB-65F9AC6B423B"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "BootCamp/WebView/ITuneDetailViewController.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "133"
-            endingLineNumber = "133"
-            landmarkName = "webView(_:didFailProvisionalNavigation:withError:)"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "14EBF33E-CE23-4641-8CDB-65F9AC6B423B - cc6bcc764555fcca"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "BootCamp.ITuneDetailViewController.webView(_: __C.WKWebView, didFailProvisionalNavigation: Swift.Optional&lt;__C.WKNavigation&gt;, withError: Swift.Error) -&gt; ()"
-                  moduleName = "BootCamp"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/esb23904/Desktop/BootCamp/BootCamp/WebView/ITuneDetailViewController.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "137"
-                  endingLineNumber = "137"
-                  offsetFromSymbolStart = "1459">
-               </Location>
-               <Location
-                  uuid = "14EBF33E-CE23-4641-8CDB-65F9AC6B423B - cc6bcc764555ff4e"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "BootCamp.ITuneDetailViewController.webView(_: __C.WKWebView, didFailProvisionalNavigation: Swift.Optional&lt;__C.WKNavigation&gt;, withError: Swift.Error) -&gt; ()"
-                  moduleName = "BootCamp"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/esb23904/Desktop/BootCamp/BootCamp/WebView/ITuneDetailViewController.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "133"
-                  endingLineNumber = "133"
-                  offsetFromSymbolStart = "1459">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "0F78913B-7F2F-421E-ADD5-F3E5D97C4317"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "BootCamp/WebView/ITuneDetailViewController.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "124"
-            endingLineNumber = "124"
-            landmarkName = "webView(_:didFailProvisionalNavigation:withError:)"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "0F78913B-7F2F-421E-ADD5-F3E5D97C4317 - cc6bcc764555ffa3"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "BootCamp.ITuneDetailViewController.webView(_: __C.WKWebView, didFailProvisionalNavigation: Swift.Optional&lt;__C.WKNavigation&gt;, withError: Swift.Error) -&gt; ()"
-                  moduleName = "BootCamp"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/esb23904/Desktop/BootCamp/BootCamp/WebView/ITuneDetailViewController.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "128"
-                  endingLineNumber = "128"
-                  offsetFromSymbolStart = "318">
-               </Location>
-               <Location
-                  uuid = "0F78913B-7F2F-421E-ADD5-F3E5D97C4317 - cc6bcc764555fe27"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "BootCamp.ITuneDetailViewController.webView(_: __C.WKWebView, didFailProvisionalNavigation: Swift.Optional&lt;__C.WKNavigation&gt;, withError: Swift.Error) -&gt; ()"
-                  moduleName = "BootCamp"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/esb23904/Desktop/BootCamp/BootCamp/WebView/ITuneDetailViewController.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "124"
-                  endingLineNumber = "124"
-                  offsetFromSymbolStart = "318">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "8908E4A7-BDE5-4835-B5A5-63EE15056D3B"
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "BootCamp/WebView/ITuneDetailViewController.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "49"
-            endingLineNumber = "49"
-            landmarkName = "viewDidLoad()"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "8908E4A7-BDE5-4835-B5A5-63EE15056D3B - 3e186dd2dc01436b"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "BootCamp.ITuneDetailViewController.viewDidLoad() -&gt; ()"
-                  moduleName = "BootCamp"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/esb23904/Desktop/BootCamp/BootCamp/WebView/ITuneDetailViewController.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "43"
-                  endingLineNumber = "43"
-                  offsetFromSymbolStart = "668">
-               </Location>
-               <Location
-                  uuid = "8908E4A7-BDE5-4835-B5A5-63EE15056D3B - 3e186dd2dc01422d"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "BootCamp.ITuneDetailViewController.viewDidLoad() -&gt; ()"
-                  moduleName = "BootCamp"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/esb23904/Desktop/BootCamp/BootCamp/WebView/ITuneDetailViewController.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "49"
-                  endingLineNumber = "49"
-                  offsetFromSymbolStart = "668">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "CC38903D-3F6E-438E-B900-929C48214FAE"
+            uuid = "512BA74F-902D-48D4-AACC-4B16CBE9D55B"
             shouldBeEnabled = "No"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "BootCamp/ChangeTheme/ChangeThemeViewController.swift"
+            filePath = "BootCamp/Search/SearchViewController.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "79"
-            endingLineNumber = "79"
-            landmarkName = "tableView(_:didSelectRowAt:)"
+            startingLineNumber = "169"
+            endingLineNumber = "169"
+            landmarkName = "readMoreClick(_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "DE872F9F-E825-41BF-ADE9-C33555C6CEFA"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "BootCamp/Search/SearchViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "96"
+            endingLineNumber = "96"
+            landmarkName = "tableView(_:heightForRowAt:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "CC94EB64-124E-4F65-9CFD-6CB316AD4018"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "BootCamp/Collect/CollectItemViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "105"
+            endingLineNumber = "105"
+            landmarkName = "removeCollectClick(_:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

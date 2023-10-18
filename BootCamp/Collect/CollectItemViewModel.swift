@@ -17,8 +17,8 @@ class CollectItemViewModel {
     var movies = [MyITuneData]()
     var musics = [MyITuneData]()
     func getData() {
-        movies = userData.getAllCollectMovies()
-        musics = userData.getAllCollectMusic()
+        movies = userData.getAllCollectMovies().sorted(by: { $0.trackId < $1.trackId })
+        musics = userData.getAllCollectMusic().sorted(by: { $0.trackId < $1.trackId })
     }
 }
 
@@ -37,12 +37,11 @@ extension CollectItemViewModel {
         switch( collectType ) {
         case .電影 :
             array = movies
-            
         case .音樂 :
             array = musics
         }
         
-        return ( indexPath.row >= array.count ) ? nil : array[indexPath.row]
+        return ( indexPath.row >= array.count && indexPath.row >= 0) ? nil : array[indexPath.row]
     }
     
     func removeData(indexPath:IndexPath) {

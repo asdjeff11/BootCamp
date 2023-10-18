@@ -124,10 +124,10 @@ extension MyDataBase {
         var jsonString = ""
         if ( sqlite3_prepare_v2(self.db, query, -1, &statement,nil) == SQLITE_OK ) {
             var count = 0
-            while sqlite3_step(statement) == SQLITE_ROW {
+            while sqlite3_step(statement) == SQLITE_ROW { // 資料筆數
                 jsonString = "\(jsonString){"
                 let col_count = sqlite3_column_count(statement)
-                for i in 0..<col_count {
+                for i in 0..<col_count { // 資料內容
                     let name = String(describing: String(cString:sqlite3_column_origin_name(statement, i)))
                     var data = ""
                     let type = sqlite3_column_type(statement, i)
@@ -149,7 +149,7 @@ extension MyDataBase {
                 count += 1
             }
             
-            if ( count > 1 ) {
+            if ( count > 1 ) { // 筆數 > 1 加 [] 表示陣列
                 jsonString = "[" + String(jsonString.dropLast()) + "]"
             }
             else {

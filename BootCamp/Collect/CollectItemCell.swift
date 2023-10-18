@@ -23,6 +23,17 @@ class CollectItemCell:UITableViewCell {
         return btn
     }()
     
+    // 修改cell長寬
+    override var frame: CGRect {
+        didSet {
+            var newFrame = frame
+            newFrame.origin.x += 10 // 原先frame 向右移動
+            newFrame.size.width -= 2 * 10 // 原先frame 原寬度少左邊間隔寬度 + 右邊寬度 ( 所以 * 2 )
+            newFrame.origin.y += 10 // 向下 10
+            newFrame.size.height -= 10 // 高度少10 ( 上面的高度 )
+            super.frame = newFrame
+        }
+    }
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         cellImageView = UIImageView()
@@ -33,6 +44,7 @@ class CollectItemCell:UITableViewCell {
 
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
+        layer.cornerRadius = 10
         layer.borderColor = userData.getSecondColor().cgColor
         layer.borderWidth = 1
         backgroundColor = userData.getMainColor()

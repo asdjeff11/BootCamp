@@ -12,6 +12,7 @@ class SwipeView:UIControl {
     // 判斷有幾個按鈕
     var buttons = [UIButton]()
     var selectIndex:Int = 0
+    let selectBGView = UIView()
     var commaSeperatedButtonTitles: String = "" {
         didSet {
             updateView()
@@ -19,6 +20,16 @@ class SwipeView:UIControl {
     }
     
     let selectColor:UIColor = .systemGray
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        
+        selectBGView.backgroundColor = .systemGray5
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     func updateView() {
         buttons.removeAll()
@@ -40,21 +51,26 @@ class SwipeView:UIControl {
             buttons.append(button)
         }
         
-        buttons[0].backgroundColor = selectColor // default 選擇
-                
+        self.addSubview(selectBGView)
+        
         let stackView = UIStackView.init(arrangedSubviews: buttons)
         stackView.axis = .horizontal
         stackView.alignment = .fill
         stackView.distribution = .fillEqually
-        stackView.spacing = 0.0
         addSubview(stackView)
         
         NSLayoutConstraint.useAndActivateConstraints(constraints: [
+            selectBGView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            selectBGView.centerYAnchor.constraint(equalTo: self.centerYAnchor),
+            selectBGView.heightAnchor.constraint(equalTo:self.heightAnchor ),
+            selectBGView.widthAnchor.constraint(equalToConstant:self.frame.width / CGFloat(buttonsTitles.count)),
+            
             stackView.topAnchor.constraint(equalTo: self.topAnchor),
             stackView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
             stackView.leftAnchor.constraint(equalTo: self.leftAnchor),
             stackView.rightAnchor.constraint(equalTo: self.rightAnchor)
         ])
+        
     }
     
     @objc func buttonTapped(_ button:UIButton) {
@@ -63,13 +79,12 @@ class SwipeView:UIControl {
             myButton.backgroundColor = .clear
             if ( myButton == button ) {
                 selectIndex = buttonIndex
+                
                 UIView.animate(withDuration: 0.3, animations: {
-                    myButton.backgroundColor = self.selectColor
+                    self.selectBGView.center = myButton.center
                 })
             }
         }
         sendActions(for:.valueChanged) // 通知外部 內部已修改
     }
-    
-    
 }
