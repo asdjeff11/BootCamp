@@ -88,6 +88,7 @@ extension CollectItemViewController:UITableViewDelegate, UITableViewDataSource {
         cell.setData(data: data)
         cell.setThemeColor()
         cell.removeCollectButton.addTarget(self, action: #selector(removeCollectClick(_:)), for: .touchUpInside)
+        
         return cell
     }
     
@@ -97,6 +98,17 @@ extension CollectItemViewController:UITableViewDelegate, UITableViewDataSource {
         else { return }
     
         UIApplication.shared.open(url)
+    }
+    
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        cell.alpha = 0
+
+        UIView.animate(
+            withDuration: 0.5,
+            delay: 0.1 ,
+            animations: {
+                cell.alpha = 1
+        })
     }
     
     @objc func removeCollectClick(_ sender:UIButton) {
