@@ -10,13 +10,21 @@ import Foundation
 enum MediaType:Int,CaseIterable {
     case 電影 = 0
     case 音樂 = 1
-    
     func getType()->String { // 提供給api使用
         switch ( self ) {
         case .電影 :
             return "movie"
         case .音樂 :
             return "music"
+        }
+    }
+    
+    func getChineseString()->String {
+        switch( self ) {
+        case .電影 :
+            return "電影"
+        case .音樂 :
+            return "音樂"
         }
     }
 }

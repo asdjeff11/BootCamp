@@ -20,7 +20,6 @@ class SearchViewController:CustomViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        presenter.refreshCollect()
         tableView.reloadData() // 確保追蹤的資訊是正常的
     }
     
@@ -85,7 +84,8 @@ extension SearchViewController:UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return (section == 0 ? presenter.getMovieSize() : presenter.getMusicSize()) * 2 // * 2 is space
+        guard let type = MediaType(rawValue: section) else { return 0 }
+        return presenter.getSize(type: type) * 2 // * 2 is space
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
@@ -104,7 +104,7 @@ extension SearchViewController:UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerView = UIView()
         headerView.backgroundColor = .white
-        let title = ( section == MediaType.電影.rawValue ) ? "電影" : "音樂"
+        let title = MediaType(rawValue: section)?.getChineseString() ?? "None" // ( section == MediaType.電影.rawValue ) ? "電影" : "音樂"
         let titleLabel = UILabel.createLabel(size: 40 * Theme.factor, color: .black, text: title)
         headerView.addSubview(titleLabel)
         NSLayoutConstraint.useAndActivateConstraints(constraints: [
@@ -124,13 +124,11 @@ extension SearchViewController:UITableViewDelegate, UITableViewDataSource {
             return spaceCell
         }
         
-        let type:MediaType = ( indexPath.section == 0 ) ? .電影 : .音樂
-        
         guard let cell = tableView.dequeueReusableCell(withIdentifier: "SearchCell") as? SearchCell,
+              let type = MediaType(rawValue: indexPath.section),
               let item = presenter.getData(type: type, row: indexPath.row / 2)
         else { return UITableViewCell() }
         
-        cell.IsMovie = ( type == .電影)
         cell.setData(searchModel: item)
         cell.readMoreButton.addTarget(self, action: #selector(readMoreClick(_:)), for: .touchUpInside)
         cell.collectButton.addTarget(self, action: #selector(collectClick(_:)), for: .touchUpInside)
@@ -142,17 +140,20 @@ extension SearchViewController:UITableViewDelegate, UITableViewDataSource {
                                         options: [.allowInvalidSSLCertificates,.retryFailed,.continueInBackground])
          { [weak self] (image,error,cache,url) in
              guard let self = self else { return }
-             if error != nil && self.tableView.visibleCells.contains(cell) { // 當前顯示的重撈就好  未來如果有需要 會再次呼叫到 cellForRowAt 撈取
+             // 撈失敗 -1001 且 是當前顯示的cell
+             if let error = error,
+                error._code == -1001,
+                self.tableView.visibleCells.contains(cell) {
                  self.tableView.reloadRows(at: [indexPath], with: .none)
              }
          }
-        
-        
+
         return cell
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        guard let item = presenter.getData(type: ( indexPath.section == 0 ) ? .電影:.音樂, row: indexPath.row / 2),
+        guard let type = MediaType(rawValue: indexPath.section),
+              let item = presenter.getData(type: type, row: indexPath.row / 2),
               let url = URL(string:item.ITuneData.trackViewURL)
         else { return }
     
@@ -166,8 +167,9 @@ extension SearchViewController:UITableViewDelegate, UITableViewDataSource {
     
     @objc func readMoreClick(_ sender:UIButton ) {
         guard let cell = sender.superview?.superview as? SearchCell else { return }
-        if let indexPath = tableView.indexPath(for: cell) {
-            presenter.setFolder(type: ( indexPath.section == 0 ) ? .電影:.音樂, row: indexPath.row / 2)
+        if let indexPath = tableView.indexPath(for: cell),
+           let type = MediaType(rawValue: indexPath.section) {
+            presenter.setFolder(type: type, row: indexPath.row / 2)
             tableView.scrollToRow(at: indexPath, at: .none, animated: true)
             tableView.reloadRows(at: [indexPath], with: .automatic)
         }
@@ -175,8 +177,9 @@ extension SearchViewController:UITableViewDelegate, UITableViewDataSource {
     
     @objc func collectClick(_ sender:UIButton) {
         guard let cell = sender.superview?.superview as? SearchCell else { return }
-        if let indexPath = tableView.indexPath(for: cell) {
-            presenter.setCollect(type: ( indexPath.section == 0 ) ? .電影:.音樂, row: indexPath.row / 2)
+        if let indexPath = tableView.indexPath(for: cell),
+           let type = MediaType(rawValue: indexPath.section) {
+            presenter.setCollect(type: type, row: indexPath.row / 2)
             tableView.reloadRows(at: [indexPath], with: .automatic)
         }
     }

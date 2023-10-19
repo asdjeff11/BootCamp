@@ -8,8 +8,7 @@
 import Foundation
 import UIKit
 class UserData {
-    private var collectMovies:[Int:MyITuneData] = [:] // trackId => data
-    private var collectMusics:[Int:MyITuneData] = [:]
+    private var collectDatas:[Int:[Int:MyITuneData]] = [:] // 類別 => [trackId => Data]
     private let userDefault = UserDefaults()
     private var themeType:Theme.ThemeStyle = .LightTheme
     
@@ -18,18 +17,16 @@ class UserData {
            let type = Theme.ThemeStyle(rawValue: themeStyle) {
             themeType = type
         }
+        for type in MediaType.allCases {
+            collectDatas[type.rawValue] = [:]
+        }
     }
     
     func getDbData() {
         let query = "Select * from `CollectITuneData` ;"
         let ITuneDatas:[MyITuneData] = db.read2Object(query: query)
         for data in ITuneDatas {
-            if ( data.type == 0 ) { // movie
-                collectMovies[data.trackId] = data
-            }
-            else if ( data.type == 1 ) { // music
-                collectMusics[data.trackId] = data
-            }
+            collectDatas[data.type]?[data.trackId] = data
         }
     }
 }
@@ -58,44 +55,42 @@ extension UserData {
 extension UserData {
     func saveData(data:MyITuneData) {
         db.executeQuery(query: data.getUpdateQuery())
-        switch ( data.type ) {
-        case MediaType.電影.rawValue :
-            self.collectMovies[data.trackId] = data
-        case MediaType.音樂.rawValue :
-            self.collectMusics[data.trackId] = data
-        default :
-            return
-        }
+        self.collectDatas[data.type]?[data.trackId] = data
     }
     
-    func removeData(trackId:Int) {
+    func removeData(type:MediaType,trackId:Int) {
         let query = """
-        DELETE FROM `\(MyITuneData.tableName)` WHERE `trackId` = \(trackId);
+        DELETE FROM `\(MyITuneData.tableName)` WHERE `trackId` = \(trackId) and `type` = \(type.rawValue);
         """
         db.executeQuery(query: query)
         
-        self.collectMovies.removeValue(forKey: trackId)
-        self.collectMusics.removeValue(forKey: trackId)
+        collectDatas[type.rawValue]?.removeValue(forKey: trackId)
     }
 }
 
 
 // 取得追蹤
 extension UserData {
-    func getAllCollectMovies()->[MyITuneData] {
-        Array(collectMovies.values)
+    func getCollectMedia(type:MediaType)->[MyITuneData] {
+        guard let datas = collectDatas[type.rawValue]?.values else { return [] }
+        return Array(datas)
     }
-    
-    func getAllCollectMusic()->[MyITuneData] {
-        Array(collectMusics.values)
-    }
-    
-    func isCollect(trackId:Int) -> Bool {
-        return ( collectMovies[trackId] != nil || collectMusics[trackId] != nil )
+   
+    func isCollect(type:MediaType, trackId:Int) -> Bool {
+        if let datas = collectDatas[type.rawValue],
+           datas[trackId] != nil {
+            return true
+        }
+        else {
+            return false
+        }
     }
     
     func getTotalCount()->String {
-        let count = collectMovies.count + collectMusics.count
+        var count = 0
+        for datas in collectDatas.values {
+            count += datas.values.count
+        }
         if #available(iOS 15.0, *) {
             return count.formatted()
         }

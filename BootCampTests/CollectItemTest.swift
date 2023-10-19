@@ -12,14 +12,16 @@ final class CollectItemTest: XCTestCase {
     var presenter:CollectItemPresenter!
     override func setUp() async throws {
         presenter = CollectItemPresenter()
-        for data in userData.getAllCollectMovies() {
-            userData.removeData(trackId: data.trackId)
-        }
+        presenter.updateType()
         
-        for data in userData.getAllCollectMusic() {
-            userData.removeData(trackId: data.trackId)
+        for data in presenter.myCollectDatas {
+            userData.removeData(type: .電影, trackId: data.trackId)
         }
-        
+        presenter.updateType(type: .音樂)
+        for data in presenter.myCollectDatas {
+            userData.removeData(type: .音樂, trackId: data.trackId)
+        }
+    
         for i in 0..<3 {
             userData.saveData(data: MyITuneData(detail: ITuneDataDetail(trackId: 10000 + i,
                                                                         trackName: "MovieTrackName_\(i)",
@@ -45,10 +47,13 @@ final class CollectItemTest: XCTestCase {
     }
     
     func testGetData() {
-        presenter.getData()
-        XCTAssertTrue(presenter.movies.count == 3)
-        XCTAssertTrue(presenter.musics.count == 2)
+        presenter.updateType(type:.電影)
+        XCTAssertTrue(presenter.getItemSize() == 3)
         
+        presenter.updateType(type: .音樂)
+        XCTAssertTrue(presenter.getItemSize() == 2)
+        
+        presenter.updateType(type: .電影)
         var indexPath = IndexPath(row: 1, section: 0)
         var data = presenter.getData(indexPath: indexPath)
         
@@ -72,18 +77,17 @@ final class CollectItemTest: XCTestCase {
     }
     
     func testRemove() {
-        presenter.getData()
         presenter.updateType(type: .音樂)
         let musicSize = presenter.getItemSize()
         
         presenter.updateType(type: .電影)
         let indexPath = IndexPath(row: 0, section: 0)
         let size = presenter.getItemSize()
-        var data = presenter.getData(indexPath: indexPath)
+        let data = presenter.getData(indexPath: indexPath)
         XCTAssertNotNil(data)
         presenter.removeData(indexPath: indexPath)
         XCTAssertTrue(presenter.getItemSize() == size - 1)
-        var newData = presenter.getData(indexPath: indexPath)
+        let newData = presenter.getData(indexPath: indexPath)
         XCTAssertNotNil(newData)
         XCTAssertFalse( newData!.trackId == data!.trackId)
         

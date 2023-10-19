@@ -81,11 +81,7 @@ class CollectItemCell:UITableViewCell {
         self.trackLabel.text = data.trackName
         self.artistLabel.text = data.artistName
         self.collectionLabel.text = data.collectionName
-        self.longLabel.text = data.long
-        
-        self.cellImageView.sd_setImage(with: URL(string: data.imageURL),
-                                       placeholderImage: #imageLiteral(resourceName: "about.png"),
-                                       options: [.allowInvalidSSLCertificates])
+        self.longLabel.text = data.longTime
     }
     
     func setThemeColor() {

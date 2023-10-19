@@ -14,7 +14,7 @@ class MyDataBase {
     
     init() {
         self.db = createDB() // 資料庫連接
-        //dropTable(tableName: CollectITuneData.tableName)
+        //dropTable(tableName: MyITuneData.tableName)
         // 建立 table
         executeQuery(query: MyITuneData.createTable())
     }

@@ -9,13 +9,6 @@ import Foundation
 import UIKit
 import SDWebImage
 class SearchCell:UITableViewCell {
-    var IsMovie:Bool = true {
-        didSet {
-            scriptionLabel.isHidden = !IsMovie
-            readMoreButton.isHidden = !IsMovie
-        }
-    }
-    
     var isCollect:Bool = false {
         didSet {
             collectButtonWidth.constant = ((isCollect) ? 180 : 100) * Theme.factor
@@ -116,20 +109,29 @@ class SearchCell:UITableViewCell {
         trackLabel.text = detail.trackName
         artistLabel.text = detail.artistName
         collectionLabel.text = detail.collectionName
-        longLabel.text = detail.long
+        longLabel.text = detail.longTime
         scriptionLabel.text = detail.scription
-        if ( searchModel.isFolder ) {
-            scriptionLabel.numberOfLines = 2
-            scriptionLabel.lineBreakMode = .byTruncatingTail
-            readMoreButton.setTitle("...read more", for: .normal)
+        
+        if ( detail.scription == "" ) {
+            readMoreButton.isHidden = true
         }
         else {
-            scriptionLabel.numberOfLines = 0
-            scriptionLabel.lineBreakMode = .byCharWrapping
-            readMoreButton.setTitle("folder", for: .normal)
+            readMoreButton.isHidden = false
+            if ( searchModel.isFolder ) {
+                scriptionLabel.numberOfLines = 2
+                scriptionLabel.lineBreakMode = .byTruncatingTail
+                readMoreButton.setTitle("...read more", for: .normal)
+            }
+            else {
+                scriptionLabel.numberOfLines = 0
+                scriptionLabel.lineBreakMode = .byCharWrapping
+                readMoreButton.setTitle("folder", for: .normal)
+            }
         }
         
-        self.isCollect = searchModel.isCollect
+        if let type = MediaType(rawValue: searchModel.ITuneData.type) {
+            self.isCollect = userData.isCollect(type: type, trackId: searchModel.ITuneData.trackId)
+        }
     }
     
     

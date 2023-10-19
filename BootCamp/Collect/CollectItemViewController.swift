@@ -11,7 +11,10 @@ class CollectItemViewController:CustomViewController {
     let tableView = UITableView()
     lazy private var swipeView: SwipeView = {
         let swipeView = SwipeView(frame: CGRect(x: 0, y: 0, width: 500 * Theme.factor, height: 80 * Theme.factor))
-        swipeView.commaSeperatedButtonTitles = "電影,音樂"
+        let typeTitle = String(MediaType.allCases.reduce("", { "\($0)\($1.getChineseString())," })
+                                                 .dropLast()
+                              )
+        swipeView.commaSeperatedButtonTitles = typeTitle
         swipeView.addTarget(self, action: #selector(swipeChange), for: .valueChanged) // 點擊 則刷新tableview
         return swipeView
     }()
@@ -25,13 +28,14 @@ class CollectItemViewController:CustomViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        presenter.getData()
+        presenter.updateType()
         swipeView.updateThemeStyle()
         tableView.reloadData()
     }
     
     @objc func swipeChange() {
-        presenter.updateType(type: (swipeView.selectIndex == 0) ? .電影 : .音樂)
+        let type = MediaType(rawValue: swipeView.selectIndex) ?? .電影
+        presenter.updateType(type: type)
         tableView.reloadData()
     }
 }
@@ -88,6 +92,20 @@ extension CollectItemViewController:UITableViewDelegate, UITableViewDataSource {
         cell.setData(data: data)
         cell.setThemeColor()
         cell.removeCollectButton.addTarget(self, action: #selector(removeCollectClick(_:)), for: .touchUpInside)
+        
+        // update image
+        cell.cellImageView.sd_setImage(with: URL(string: data.imageURL),
+                                       placeholderImage: #imageLiteral(resourceName: "about.png"),
+                                       options: [.allowInvalidSSLCertificates,.retryFailed,.continueInBackground])
+        { [weak self] (image,error,cache,url) in
+            guard let self = self else { return }
+            // 撈失敗 -1001 且 是當前顯示的cell
+            if let error = error,
+               error._code == -1001,
+               self.tableView.visibleCells.contains(cell) {
+                self.tableView.reloadRows(at: [indexPath], with: .none)
+            }
+        }
         
         return cell
     }

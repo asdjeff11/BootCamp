@@ -65,7 +65,14 @@ final class BootCampTestAPI: XCTestCase {
         }
        
         wait(for: [promise], timeout: 10)
-        XCTAssert(presenter.movies.isEmpty == false)
+        let errorMsg = presenter.calculateErrorMsg()
+        if ( errorMsg == "" ) {
+            XCTAssertTrue(presenter.getSize(type: .電影) != 0)
+        }
+        else {
+            print(errorMsg)
+            XCTFail()
+        }
     }
     
     

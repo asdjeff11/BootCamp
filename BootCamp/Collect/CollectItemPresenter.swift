@@ -8,58 +8,32 @@
 import Foundation
 
 class CollectItemPresenter {
-    enum CollectType {
-        case 電影
-        case 音樂
-    }
+    private var collectType:MediaType = .電影
+    var myCollectDatas = [MyITuneData]()
     
-    private var collectType:CollectType = .電影
-    var movies = [MyITuneData]()
-    var musics = [MyITuneData]()
-    func getData() {
-        movies = userData.getAllCollectMovies().sorted(by: { $0.trackId < $1.trackId })
-        musics = userData.getAllCollectMusic().sorted(by: { $0.trackId < $1.trackId })
+    func updateType(type:MediaType? = nil) {
+        // 如果沒傳入就照舊 , 表示單純刷新資料 
+        if let type = type {
+            collectType = type
+        }
+        myCollectDatas = userData.getCollectMedia(type: collectType).sorted(by: { $0.trackId < $1.trackId })
     }
 }
 
 extension CollectItemPresenter {
     func getItemSize()->Int {
-        switch ( collectType ) {
-        case .電影 :
-            return movies.count
-        case .音樂 :
-            return musics.count
-        }
+        myCollectDatas.count
     }
     
     func getData(indexPath:IndexPath)->MyITuneData? {
-        var array = [MyITuneData]()
-        switch( collectType ) {
-        case .電影 :
-            array = movies
-        case .音樂 :
-            array = musics
-        }
-        
-        return ( indexPath.row >= array.count && indexPath.row >= 0) ? nil : array[indexPath.row]
+        ( indexPath.row >= myCollectDatas.count && indexPath.row >= 0) ? nil : myCollectDatas[indexPath.row]
     }
     
     func removeData(indexPath:IndexPath) {
-        switch ( collectType ) {
-        case .電影 :
-            let trackId = movies[indexPath.row].trackId
-            userData.removeData(trackId: trackId)
-            movies.remove(at: indexPath.row)
-        case .音樂 :
-            let trackId = musics[indexPath.row].trackId
-            userData.removeData(trackId: trackId)
-            musics.remove(at: indexPath.row)
-        }
-    }
-}
-
-extension CollectItemPresenter {
-    func updateType(type:CollectType) {
-        self.collectType = type
+        guard ( indexPath.row < myCollectDatas.count ) else { return }
+        
+        let trackId = myCollectDatas[indexPath.row].trackId
+        userData.removeData(type:collectType, trackId: trackId)
+        myCollectDatas.remove(at: indexPath.row)
     }
 }

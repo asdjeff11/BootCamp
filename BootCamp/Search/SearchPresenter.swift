@@ -9,20 +9,16 @@ import Foundation
 import UIKit
 import Alamofire
 class SearchPresenter {
-//    enum CustomError:Error {
-//        case urlError
-//        case responseError
-//    }
     private var keyword = "" // 上次搜尋紀錄
-    var movies = [SearchModel]()
-    var musics = [SearchModel]()
-    var errorMessages = Array(repeating: "", count: 2) // [0]:movie , [1]:music
-    let group = DispatchGroup()
-    var task:UIBackgroundTaskIdentifier?
+    private var searchDatas:[MediaType:[SearchModel]] = [:] // MediaType => [Data]
+    private var errorMessages = Array(repeating: "", count: MediaType.allCases.count) // [0]:movie , [1]:music ...
+    private let group = DispatchGroup()
     
-//    private final let limit = 20 // 一次撈取的數量
-//    private var movie_offset = 1 // movie 下次要撈取時起始位置
-//    private var music_offset = 1 // music 下次要撈取時起始位置
+    init() {
+        for type in MediaType.allCases {
+            searchDatas[type] = []
+        }
+    }
 }
 
 extension SearchPresenter {
@@ -32,9 +28,9 @@ extension SearchPresenter {
         self.keyword = keyword
         
         // fetch
-        self.fetchKeyword(condition:SearchITuneCondition(term:keyword,media: .電影))
-        self.fetchKeyword(condition: SearchITuneCondition(term:keyword,media: .音樂))
-        
+        for mediaType in MediaType.allCases {
+            self.fetchKeyword(condition:SearchITuneCondition(term:keyword,media: mediaType))
+        }
         self.group.notify(queue: .main) { [weak self] in
             guard let self = self else { return }
             callBack(self.calculateErrorMsg())
@@ -43,17 +39,12 @@ extension SearchPresenter {
     
     // 根據條件 撈取資訊
     func fetchKeyword(condition:SearchITuneCondition) {
-        let errorIndex = condition.media == .電影 ? 0 : 1
+        let errorIndex = condition.media.rawValue
         group.enter()
         self.fetchURLData(url_Str: condition.getUrl(), finishCallBack:{ (result:Result<ITuneResult,Error>) in
             switch ( result ) {
             case .success(let datas) :
-                switch( condition.media ) {
-                case .電影 :
-                    self.movies = datas.results.map({ SearchModel(detail: $0,type: condition.media) })
-                case .音樂 :
-                    self.musics = datas.results.map({ SearchModel(detail: $0,type: condition.media) })
-                }
+                self.searchDatas[condition.media] = datas.results.map({ SearchModel(detail: $0,type: condition.media) })
             case .failure(let error) :
                 self.errorMessages[errorIndex] = error.localizedDescription
             }
@@ -76,67 +67,36 @@ extension SearchPresenter {
 
 // cell 按鈕觸發事件
 extension SearchPresenter {
-    // 0: movie , 1: music
     func setFolder(type:MediaType, row:Int) {
-        switch ( type ) {
-        case .電影 :
-            self.movies[row].isFolder = !self.movies[row].isFolder
-        case .音樂 :
-            self.musics[row].isFolder = !self.musics[row].isFolder
-        }
+        guard let data = searchDatas[type]?[row] else { return }
+        data.isFolder = !data.isFolder
     }
     
     func setCollect(type:MediaType, row:Int)  {
-        var data:SearchModel
-        switch ( type ) {
-        case .電影 :
-            data = movies[row]
-        case .音樂 :
-            data = musics[row]
-        }
-        
-        if ( data.isCollect ) { // 原本追蹤
-            userData.removeData(trackId: data.ITuneData.trackId)
+        guard let data = searchDatas[type]?[row] else { return }
+        let trackId = data.ITuneData.trackId
+        if ( userData.isCollect(type: type, trackId: trackId) ) { // 原本追蹤
+            userData.removeData(type: type, trackId: trackId)
         }
         else { // 原本沒追蹤
             userData.saveData(data: data.ITuneData)
         }
-        
-        data.isCollect = !data.isCollect
     }
 }
 
 // view 訪問取得資料
 extension SearchPresenter {
-    func getMusicSize()->Int {
-        musics.count
-    }
-    
-    func getMovieSize()->Int {
-        movies.count
+    func getSize(type:MediaType)->Int {
+        searchDatas[type]?.count ?? 0
     }
     
     func getData(type:MediaType, row:Int)->SearchModel? {
-        var array = [SearchModel]()
-        switch ( type ) {
-        case .電影 :
-            array = movies
-        case .音樂 :
-            array = musics
-        }
+        guard let datas = searchDatas[type],
+              datas.count > row, // 降低 index out of range 的可能性
+              row >= 0
+        else { return nil }
         
-        if ( array.count > row && row >= 0 ) {
-            return array[row]
-        }
-        else { // 降低 index out of range 的可能性
-            return nil
-        }
-    }
-}
-
-extension SearchPresenter {
-    func getLastKeyword()-> String {
-        return keyword
+        return datas[row]
     }
 }
 
@@ -144,8 +104,9 @@ extension SearchPresenter {
 extension SearchPresenter {
     // 重置資料
     private func initData() {
-        musics.removeAll()
-        movies.removeAll()
+        for key in searchDatas.keys {
+            searchDatas[key]?.removeAll()
+        }
         errorMessages = Array(repeating: "", count: 2)
     }
     
@@ -164,12 +125,15 @@ extension SearchPresenter {
     }
     
     // 刷新所有追蹤資訊
-    func refreshCollect() {
-        for movie in movies {
-            movie.isCollect = userData.isCollect(trackId: movie.ITuneData.trackId)
-        }
-        for music in musics {
-            music.isCollect = userData.isCollect(trackId: music.ITuneData.trackId)
-        }
+//    func refreshCollect() {
+//        for (type,datas) in searchDatas {
+//            for data in datas {
+//                data.isCollect = userData.isCollect(type: type, trackId: data.ITuneData.trackId)
+//            }
+//        }
+//    }
+    
+    func getLastKeyword()-> String {
+        keyword
     }
 }

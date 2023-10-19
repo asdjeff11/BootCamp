@@ -22,19 +22,14 @@ extension MyDataBaseStructer {
             let label:String = child.label!
             if ( label == "tableName" ) { continue }
             let valueType = "\(type(of: child.value))"
-            
+                
             // value 修改
             var value = "\(child.value)"
             if ( value == "nil" ) { value = "" }
             
             if ( valueType.contains("String") ) { // 字串
-                if ( value == "~" ) { value = "\"\"" } // 改回空字串
-                else { value = "\"\(value)\"" } // 補string \"\"符號
-            }
-            else {
-                if ( value == "-1" ) { // integer default
-                    value = "0"
-                }
+                value = value.replacingOccurrences(of: "\"", with: "\'")
+                value = "\"\(value)\"" // 補string \"\"符號
             }
             
             columnInfo = "\(columnInfo)\(label),"
@@ -54,7 +49,7 @@ struct MyITuneData:MyDataBaseStructer {
     var trackName:String = ""
     var artistName:String = ""
     var collectionName:String = ""
-    var long:String = ""
+    var longTime:String = ""
     var imageURL:String = ""
     var trackViewURL:String = ""
     var scription:String = ""
@@ -65,7 +60,7 @@ struct MyITuneData:MyDataBaseStructer {
         self.trackName = detail.trackName
         self.artistName = detail.artistName
         self.collectionName = detail.collectionName
-        self.long = long_doubeToString(timeMillis: detail.trackTimeMillis)
+        self.longTime = long_doubeToString(timeMillis: detail.trackTimeMillis)
         self.imageURL = detail.artworkUrl100
         self.trackViewURL = detail.trackViewUrl
         self.scription = detail.longDescription ?? ""
@@ -77,7 +72,7 @@ struct MyITuneData:MyDataBaseStructer {
         case trackName = "trackName"
         case artistName = "artistName"
         case collectionName = "collectionName"
-        case long = "long"
+        case longTime = "longTime"
         case imageURL = "imageURL"
         case trackViewURL = "trackViewURL"
         case scription = "scription"
@@ -91,7 +86,7 @@ struct MyITuneData:MyDataBaseStructer {
                 trackName text,
                 artistName text,
                 collectionName text,
-                long text,
+                longTime text,
                 imageURL text,
                 trackViewURL text,
                 scription text,
@@ -115,7 +110,7 @@ extension MyITuneData {
         trackName = try values.decodeIfPresent(String.self, forKey: .trackName) ?? ""
         artistName = try values.decodeIfPresent(String.self, forKey: .artistName) ?? ""
         collectionName = try values.decodeIfPresent(String.self, forKey: .collectionName) ?? ""
-        long = try values.decodeIfPresent(String.self, forKey: .long) ?? ""
+        longTime = try values.decodeIfPresent(String.self, forKey: .longTime) ?? ""
         imageURL = try values.decodeIfPresent(String.self, forKey: .imageURL) ?? ""
         trackViewURL = try values.decodeIfPresent(String.self, forKey: .trackViewURL) ?? ""
         scription = try values.decodeIfPresent(String.self, forKey: .scription) ?? ""
