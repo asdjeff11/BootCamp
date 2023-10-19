@@ -33,7 +33,9 @@ extension SearchPresenter {
         }
         self.group.notify(queue: .main) { [weak self] in
             guard let self = self else { return }
-            callBack(self.calculateErrorMsg())
+            let errorMessage = self.calculateErrorMessage()
+            if ( errorMessage != "" ) { self.keyword = "" }
+            callBack(errorMessage)
         }
     }
     
@@ -54,14 +56,15 @@ extension SearchPresenter {
     
     // URL 撈取資訊
     func fetchURLData<T:Codable>(url_Str:String,finishCallBack: @escaping(Result<T,Error>)->Void) {
-        AF.request(url_Str).responseDecodable(of: T.self) { response in
-            switch ( response.result ) {
-            case .success(let data):
+        AF.request(url_Str){ $0.timeoutInterval = 30 }
+          .responseDecodable(of: T.self) { response in
+              switch ( response.result ) {
+              case .success(let data):
                 finishCallBack(.success(data))
-            case .failure(let error) :
+              case .failure(let error) :
                 finishCallBack(.failure(error))
+              }
             }
-        }
     }
 }
 
@@ -111,7 +114,7 @@ extension SearchPresenter {
     }
     
     // 將錯誤訊息轉換
-    func calculateErrorMsg()->String {
+    func calculateErrorMessage()->String {
         var errMsg = ""
         if ( !self.errorMessages[0].isEmpty ) {
             errMsg += "fetch movie Error: \(self.errorMessages[0])"

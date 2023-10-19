@@ -154,16 +154,12 @@ extension ITuneDetailViewController:WKNavigationDelegate {
     
     // 決定網頁是否允許跳轉
     func webView(_ webView: WKWebView, decidePolicyFor navigationAction: WKNavigationAction, preferences: WKWebpagePreferences, decisionHandler: @escaping (WKNavigationActionPolicy, WKWebpagePreferences) -> Void) {
-        if navigationAction.shouldPerformDownload {
-            decisionHandler(.download, preferences)
-        }
-        else if ( navigationAction.targetFrame == nil || navigationAction.targetFrame?.isMainFrame == nil) {
+        if ( navigationAction.targetFrame == nil || navigationAction.targetFrame?.isMainFrame == nil) {
             decisionHandler(.cancel, preferences)
             webView.load(navigationAction.request)
         }
         else {
             decisionHandler(.allow, preferences)
-            
         }
     }
     
@@ -173,8 +169,6 @@ extension ITuneDetailViewController:WKNavigationDelegate {
             decisionHandler(.allow)
             forwardButton.isEnabled = webView.canGoForward
             backButton.isEnabled = webView.canGoBack
-        } else {
-            decisionHandler(.download)
         }
     }
     

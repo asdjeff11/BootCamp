@@ -36,7 +36,6 @@ final class SearchViewTest: XCTestCase {
                                 type: .音樂)
                 
                 )
-
             }
         }
         //userData.removeData(trackId: 200001)
