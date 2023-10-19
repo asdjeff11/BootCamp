@@ -14,6 +14,7 @@ class Theme {
         case LightTheme = "淺色主題"
         case yellowTheme = "黃色主題"
         case blueTheme = "藍色主題"
+        case redTheme = "紅色主題"
         func getSecondColor()->UIColor {
             switch ( self ) {
             case .DarkTheme :
@@ -23,6 +24,8 @@ class Theme {
             case .yellowTheme :
                 return .black
             case .blueTheme :
+                return .black
+            case .redTheme :
                 return .black
             }
         }
@@ -37,6 +40,8 @@ class Theme {
                 return UIColor(hex: 0xF5F5DC)
             case .blueTheme :
                 return UIColor(hex: 0x87CEEB)
+            case .redTheme :
+                return UIColor(hex: 0xFFB7C5)
             }
         }
         

@@ -53,7 +53,7 @@ struct MyITuneData:MyDataBaseStructer {
     var imageURL:String = ""
     var trackViewURL:String = ""
     var scription:String = ""
-    var type = 0 // 0:Movie , 1:Music
+    var type = 0 // 0:Movie , 1:Music ...
     
     init(detail:ITuneDataDetail,type:MediaType) {
         self.trackId = detail.trackId
@@ -106,7 +106,11 @@ struct MyITuneData:MyDataBaseStructer {
 extension MyITuneData {
     init(from decoder: Decoder) throws {
         let values = try decoder.container(keyedBy: CodingKeys.self)
-        trackId = try values.decodeIfPresent(Int.self, forKey: .trackId) ?? -1
+        guard let ID = try values.decodeIfPresent(Int.self, forKey: .trackId)
+        else {
+            throw DecodingError.dataCorruptedError(forKey: .trackId, in: values, debugDescription: "trackId error")
+        }
+        trackId = ID
         trackName = try values.decodeIfPresent(String.self, forKey: .trackName) ?? ""
         artistName = try values.decodeIfPresent(String.self, forKey: .artistName) ?? ""
         collectionName = try values.decodeIfPresent(String.self, forKey: .collectionName) ?? ""
