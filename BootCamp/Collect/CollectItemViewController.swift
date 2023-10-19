@@ -28,14 +28,14 @@ class CollectItemViewController:CustomViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        presenter.updateType()
+        presenter.update()
         swipeView.updateThemeStyle()
         tableView.reloadData()
     }
     
     @objc func swipeChange() {
         let type = MediaType(rawValue: swipeView.selectIndex) ?? .電影
-        presenter.updateType(type: type)
+        presenter.update(type: type)
         tableView.reloadData()
     }
 }

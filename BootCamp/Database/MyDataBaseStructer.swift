@@ -102,23 +102,3 @@ struct MyITuneData:MyDataBaseStructer {
         return str
     }
 }
-
-extension MyITuneData {
-    init(from decoder: Decoder) throws {
-        let values = try decoder.container(keyedBy: CodingKeys.self)
-        guard let ID = try values.decodeIfPresent(Int.self, forKey: .trackId)
-        else {
-            throw DecodingError.dataCorruptedError(forKey: .trackId, in: values, debugDescription: "trackId error")
-        }
-        trackId = ID
-        trackName = try values.decodeIfPresent(String.self, forKey: .trackName) ?? ""
-        artistName = try values.decodeIfPresent(String.self, forKey: .artistName) ?? ""
-        collectionName = try values.decodeIfPresent(String.self, forKey: .collectionName) ?? ""
-        longTime = try values.decodeIfPresent(String.self, forKey: .longTime) ?? ""
-        imageURL = try values.decodeIfPresent(String.self, forKey: .imageURL) ?? ""
-        trackViewURL = try values.decodeIfPresent(String.self, forKey: .trackViewURL) ?? ""
-        scription = try values.decodeIfPresent(String.self, forKey: .scription) ?? ""
-        type = try values.decodeIfPresent(Int.self, forKey: .type) ?? -1
-    }
-}
-

@@ -12,12 +12,12 @@ final class CollectItemTest: XCTestCase {
     var presenter:CollectItemPresenter!
     override func setUp() async throws {
         presenter = CollectItemPresenter()
-        presenter.updateType()
+        presenter.update()
         
         for data in presenter.myCollectDatas {
             userData.removeData(type: .電影, trackId: data.trackId)
         }
-        presenter.updateType(type: .音樂)
+        presenter.update(type: .音樂)
         for data in presenter.myCollectDatas {
             userData.removeData(type: .音樂, trackId: data.trackId)
         }
@@ -47,13 +47,13 @@ final class CollectItemTest: XCTestCase {
     }
     
     func testGetData() {
-        presenter.updateType(type:.電影)
+        presenter.update(type:.電影)
         XCTAssertTrue(presenter.getItemSize() == 3)
         
-        presenter.updateType(type: .音樂)
+        presenter.update(type: .音樂)
         XCTAssertTrue(presenter.getItemSize() == 2)
         
-        presenter.updateType(type: .電影)
+        presenter.update(type: .電影)
         var indexPath = IndexPath(row: 1, section: 0)
         var data = presenter.getData(indexPath: indexPath)
         
@@ -65,7 +65,7 @@ final class CollectItemTest: XCTestCase {
         XCTAssertNil(data)
         
         // 切換音樂測試
-        presenter.updateType(type: .音樂)
+        presenter.update(type: .音樂)
         indexPath = IndexPath(row: 0, section: 0)
         data = presenter.getData(indexPath: indexPath)
         XCTAssertNotNil(data)
@@ -77,10 +77,10 @@ final class CollectItemTest: XCTestCase {
     }
     
     func testRemove() {
-        presenter.updateType(type: .音樂)
+        presenter.update(type: .音樂)
         let musicSize = presenter.getItemSize()
         
-        presenter.updateType(type: .電影)
+        presenter.update(type: .電影)
         let indexPath = IndexPath(row: 0, section: 0)
         let size = presenter.getItemSize()
         let data = presenter.getData(indexPath: indexPath)
@@ -91,7 +91,7 @@ final class CollectItemTest: XCTestCase {
         XCTAssertNotNil(newData)
         XCTAssertFalse( newData!.trackId == data!.trackId)
         
-        presenter.updateType(type: .音樂)
+        presenter.update(type: .音樂)
         XCTAssertEqual(presenter.getItemSize(), musicSize)
     }
     

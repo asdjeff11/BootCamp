@@ -10,9 +10,9 @@ import UIKit
 import Alamofire
 class SearchPresenter {
     private var keyword = "" // 上次搜尋紀錄
-    private var searchDatas:[MediaType:[SearchModel]] = [:] // MediaType => [Data]
+    var searchDatas:[MediaType:[SearchModel]] = [:] // MediaType => [Data]
     private var errorMessages = Array(repeating: "", count: MediaType.allCases.count) // [0]:movie , [1]:music ...
-    private let group = DispatchGroup()
+    let group = DispatchGroup()
     
     init() {
         for type in MediaType.allCases {
@@ -126,15 +126,6 @@ extension SearchPresenter {
         }
         return errMsg
     }
-    
-    // 刷新所有追蹤資訊
-//    func refreshCollect() {
-//        for (type,datas) in searchDatas {
-//            for data in datas {
-//                data.isCollect = userData.isCollect(type: type, trackId: data.ITuneData.trackId)
-//            }
-//        }
-//    }
     
     func getLastKeyword()-> String {
         keyword

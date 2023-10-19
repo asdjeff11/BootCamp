@@ -20,9 +20,11 @@ class UserData {
         for type in MediaType.allCases {
             collectDatas[type.rawValue] = [:]
         }
+        
+        getDbData()
     }
     
-    func getDbData() {
+    private func getDbData() {
         let query = "Select * from `CollectITuneData` ;"
         let ITuneDatas:[MyITuneData] = db.read2Object(query: query)
         for data in ITuneDatas {

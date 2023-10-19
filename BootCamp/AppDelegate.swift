@@ -18,8 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         window?.backgroundColor = .white
         window?.rootViewController = MainTabBarViewController()
         window?.makeKeyAndVisible()
-        
-        userData.getDbData()
+
         return true
     }
 }

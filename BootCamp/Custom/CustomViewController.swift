@@ -20,7 +20,6 @@ class CustomViewController:UIViewController {
         setUpNavigation(title: title ?? "" ,backButtonVisit: backButtonVisit)
         
         self.view.backgroundColor = userData.getMainColor()
-        //self.view.layer.contents = Theme.themeStlye.getBackColor() // 背景色
         // for override 各頁面去修改需要的顏色設定
     }
     

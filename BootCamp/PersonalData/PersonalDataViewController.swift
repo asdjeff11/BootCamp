@@ -64,19 +64,6 @@ extension PersonalDataViewController {
         collectItemView.addGestureRecognizer(collectItemGesture)
     }
     
-    @objc func themeViewIsClick() {
-        let changeThemeViewController = ChangeThemeViewController()
-        changeThemeViewController.view.backgroundColor = userData.getMainColor()
-        navigationController?.pushViewController(changeThemeViewController, animated: true)
-    }
-    
-    @objc func collectViewIsClick() {
-        let collectItemViewController = CollectItemViewController()
-        collectItemViewController.view.backgroundColor = userData.getMainColor()
-        navigationController?.pushViewController(collectItemViewController, animated: true)
-    }
-    
-    
     func layout() {
         let margins = view.layoutMarginsGuide
         let stackView = UIStackView(arrangedSubviews: [themeView,collectItemView])
@@ -94,11 +81,22 @@ extension PersonalDataViewController {
             aboutAppleITuneButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10 * Theme.factor),
             aboutAppleITuneButton.heightAnchor.constraint(equalToConstant: 60 * Theme.factor),
         ])
-        
     }
 }
 
 extension PersonalDataViewController {
+    @objc func themeViewIsClick() {
+        let changeThemeViewController = ChangeThemeViewController()
+        changeThemeViewController.view.backgroundColor = userData.getMainColor()
+        navigationController?.pushViewController(changeThemeViewController, animated: true)
+    }
+    
+    @objc func collectViewIsClick() {
+        let collectItemViewController = CollectItemViewController()
+        collectItemViewController.view.backgroundColor = userData.getMainColor()
+        navigationController?.pushViewController(collectItemViewController, animated: true)
+    }
+    
     @objc func goAppleITunes() {
         let detailViewController = ITuneDetailViewController()
         detailViewController.url_string = "https://www.apple.com/tw/itunes/"

@@ -19,13 +19,11 @@ class MainTabBarViewController:UITabBarController {
         let tabBarItemSize = CGSize(width: tabBar.frame.width / numberOfItems, height: tabBar.frame.height)
         let selectBackground = UIColor.white.withAlphaComponent(0.8).image(tabBarItemSize)
         tabBar.selectionIndicatorImage = selectBackground
-        
-        tabBar.itemPositioning = .centered
     }
     
     func initTabBar() {
         let iconSize = CGSize(width: 50 * Theme.factor, height: 50 * Theme.factor)
-        //搜尋頁面
+        // 搜尋頁面
         let searchView = SearchViewController()
         let searchImage = UIImage.scaleImage(image: #imageLiteral(resourceName: "search.png"), newSize: iconSize)
         searchView.tabBarItem.image = searchImage

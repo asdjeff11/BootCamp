@@ -11,7 +11,7 @@ class CollectItemPresenter {
     private var collectType:MediaType = .電影
     var myCollectDatas = [MyITuneData]()
     
-    func updateType(type:MediaType? = nil) {
+    func update(type:MediaType? = nil) {
         // 如果沒傳入就照舊 , 表示單純刷新資料 
         if let type = type {
             collectType = type

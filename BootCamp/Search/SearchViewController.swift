@@ -104,7 +104,7 @@ extension SearchViewController:UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerView = UIView()
         headerView.backgroundColor = .white
-        let title = MediaType(rawValue: section)?.getChineseString() ?? "None" // ( section == MediaType.電影.rawValue ) ? "電影" : "音樂"
+        let title = MediaType(rawValue: section)?.getChineseString() ?? "None"
         let titleLabel = UILabel.createLabel(size: 40 * Theme.factor, color: .black, text: title)
         headerView.addSubview(titleLabel)
         NSLayoutConstraint.useAndActivateConstraints(constraints: [
@@ -130,9 +130,10 @@ extension SearchViewController:UITableViewDelegate, UITableViewDataSource {
         else { return UITableViewCell() }
         
         cell.setData(searchModel: item)
+        cell.setThemeColor()
         cell.readMoreButton.addTarget(self, action: #selector(readMoreClick(_:)), for: .touchUpInside)
         cell.collectButton.addTarget(self, action: #selector(collectClick(_:)), for: .touchUpInside)
-        cell.setThemeColor()
+        
         
         // update image
         cell.cellImageView.sd_setImage( with: URL(string: item.ITuneData.imageURL),
