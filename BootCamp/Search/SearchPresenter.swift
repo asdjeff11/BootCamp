@@ -10,7 +10,7 @@ import UIKit
 import Alamofire
 class SearchPresenter {
     private var keyword = "" // 上次搜尋紀錄
-    var searchDatas:[MediaType:[SearchModel]] = [:] // MediaType => [Data]
+    private var searchDatas:[MediaType:[SearchModel]] = [:] // MediaType => [Data]
     private var errorMessages = Array(repeating: "", count: MediaType.allCases.count) // [0]:movie , [1]:music ...
     let group = DispatchGroup()
     
@@ -18,6 +18,11 @@ class SearchPresenter {
         for type in MediaType.allCases {
             searchDatas[type] = []
         }
+    }
+    
+    // this one is for test
+    init(datas:[MediaType:[SearchModel]]) {
+        self.searchDatas = datas
     }
 }
 
@@ -46,7 +51,9 @@ extension SearchPresenter {
         self.fetchURLData(url_Str: condition.getUrl(), finishCallBack:{ (result:Result<ITuneResult,Error>) in
             switch ( result ) {
             case .success(let datas) :
-                self.searchDatas[condition.media] = datas.results.map({ SearchModel(detail: $0,type: condition.media) })
+                // 要求一定要有trackId 沒有 trackId會設成 -1 不在頁面上顯示
+                // 類別 audioBook 沒有trackId 暫時不考慮該類別
+                self.searchDatas[condition.media] = datas.results.map({SearchModel(detail: $0,type: condition.media)})
             case .failure(let error) :
                 self.errorMessages[errorIndex] = error.localizedDescription
             }

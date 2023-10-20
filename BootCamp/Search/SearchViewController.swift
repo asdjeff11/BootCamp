@@ -9,7 +9,7 @@ import Foundation
 import UIKit
 class SearchViewController:CustomViewController {
     let searchBar = SearchBar()
-    let tableView = UITableView(frame: .zero,style: .grouped)
+    let tableView = UITableView()
     let presenter = SearchPresenter()
     var isLoading = false
     override func viewDidLoad() {
@@ -25,7 +25,7 @@ class SearchViewController:CustomViewController {
     
     
     func setUp() {
-        setUpNavigation(title: "ITune")
+        setUpNavigation(title: "ITune搜尋")
         searchBar.delegate = self
         
         tableView.backgroundColor = .clear
@@ -45,7 +45,6 @@ class SearchViewController:CustomViewController {
         let tapG = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         tapG.cancelsTouchesInView = false // 防止其他元件的點擊事件失效
         view.addGestureRecognizer(tapG)
-        
     }
     @objc func dismissKeyboard() {
         view.endEditing(true)

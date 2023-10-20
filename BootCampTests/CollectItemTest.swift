@@ -46,6 +46,7 @@ final class CollectItemTest: XCTestCase {
         }
     }
     
+    // 測試切換電影與音樂 取得資料是否異常
     func testGetData() {
         presenter.update(type:.電影)
         XCTAssertTrue(presenter.getItemSize() == 3)

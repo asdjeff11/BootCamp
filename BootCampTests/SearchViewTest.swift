@@ -11,9 +11,12 @@ import XCTest
 final class SearchViewTest: XCTestCase {
     var presenter:SearchPresenter!
     override func setUp() async throws {
-        presenter = SearchPresenter()
+        var testDatas = [MediaType:[SearchModel]]()
+        for type in MediaType.allCases {
+            testDatas[type] = []
+        }
         for i in 0..<10 {
-            presenter.searchDatas[.電影]?.append(
+            testDatas[.電影]?.append(
                 SearchModel(detail: ITuneDataDetail(trackId: 20000 + i,
                                                     trackName: "movieTrackName_\(i)",
                                                     artistName: "movieArtistName_\(i)",
@@ -25,7 +28,7 @@ final class SearchViewTest: XCTestCase {
             
             )
             if ( i < 9 ) {
-                presenter.searchDatas[.音樂]?.append(
+                testDatas[.音樂]?.append(
                     SearchModel(detail: ITuneDataDetail(trackId: 20000 + i,
                                                         trackName: "movieTrackName_\(i)",
                                                         artistName: "movieArtistName_\(i)",
@@ -38,9 +41,12 @@ final class SearchViewTest: XCTestCase {
                 )
             }
         }
-        //userData.removeData(trackId: 200001)
+        
+        
+        presenter = SearchPresenter(datas: testDatas)
     }
     
+    // 測試view向presenter取得資料
     func testGetData() {
         // test Movie
         var data = presenter.getData(type: .電影, row: 1)
@@ -89,6 +95,7 @@ final class SearchViewTest: XCTestCase {
         }
     }
     
+    // 測試 搜尋資料
     func testFetchData() {
         let keyword = "hello"
         let promise = expectation(description: "Completion handler invoked")
@@ -99,8 +106,8 @@ final class SearchViewTest: XCTestCase {
         
         wait(for: [promise], timeout: 10)
         
-        XCTAssertFalse(presenter.searchDatas[.電影]!.isEmpty)
-        XCTAssertFalse(presenter.searchDatas[.音樂]!.isEmpty)
-        
+        // "hello" 搜尋 應該要有資料
+        XCTAssertFalse(presenter.getSize(type: .電影) == 0)
+        XCTAssertFalse(presenter.getSize(type: .音樂) == 0)
     }
 }

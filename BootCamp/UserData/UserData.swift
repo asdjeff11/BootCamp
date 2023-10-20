@@ -93,6 +93,9 @@ extension UserData {
         for datas in collectDatas.values {
             count += datas.values.count
         }
+        
+        count += 1000   // 為了展示收藏數量千分位 而使用 , 真實數量扣除掉此行
+        
         if #available(iOS 15.0, *) {
             return count.formatted()
         }

@@ -14,6 +14,7 @@ final class BootCampTestAPI: XCTestCase {
         presenter = SearchPresenter()
     }
     
+    // 測試 Itune url 製作
     func testSearchCondition() {
         var condition = SearchITuneCondition(term: "string")
         XCTAssertNotNil(URL(string: condition.getUrl()))
@@ -29,16 +30,14 @@ final class BootCampTestAPI: XCTestCase {
         XCTAssertTrue( condition.getUrl() == "https://itunes.apple.com/search?term=string&media=music")
     }
     
-    
+    // 測試 API 呼叫
     func testCallITuneAPI() {
-        let url_strings = ["https://itunes.apple.com/search?term=HelloWorld", // success
-                           "https://itunes.apple.com/search?term=HelloWorld&media=music", // success
-                           "https://itunes.apple.com/search?term=HelloWorld&media=movie", // success
-                           "https://itunes.apple.com/search?term=HelloWorld&media=god", // failed
+        let url_strings = ["https://itunes.apple.com/search?term=One Piece&media=music", // success
+                           "https://itunes.apple.com/search?term=One Piece&media=movie", // success
+                           "https://itunes.apple.com/search?term=One Piece&media=god", // failed
                            "123" // failed
                           ]
-        
-        let chooseURL = url_strings[0]
+        let chooseURL = url_strings[3].addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!
         let promise = expectation(description: "Completion handler invoked")
         var datas:[ITuneDataDetail]?
         presenter.fetchURLData(url_Str: chooseURL, finishCallBack: { (result:Result<ITuneResult,Error>) in
@@ -55,6 +54,7 @@ final class BootCampTestAPI: XCTestCase {
         XCTAssertNotNil(datas)
     }
     
+    // 測試輸入"關鍵字:後,是否正常取得資料
     func testFetchKeyword() {
         let condition = SearchITuneCondition(term: "hello world", media: .電影)
         let promise = expectation(description: "Completion handler invoked")
@@ -74,29 +74,4 @@ final class BootCampTestAPI: XCTestCase {
             XCTFail()
         }
     }
-    
-    
-    override func setUpWithError() throws {
-        // Put setup code here. This method is called before the invocation of each test method in the class.
-    }
-
-    override func tearDownWithError() throws {
-        // Put teardown code here. This method is called after the invocation of each test method in the class.
-    }
-
-    func testExample() throws {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-        // Any test you write for XCTest can be annotated as throws and async.
-        // Mark your test throws to produce an unexpected failure when your test encounters an uncaught error.
-        // Mark your test async to allow awaiting for asynchronous code to complete. Check the results with assertions afterwards.
-    }
-
-    func testPerformanceExample() throws {
-        // This is an example of a performance test case.
-        self.measure {
-            // Put the code you want to measure the time of here.
-        }
-    }
-
 }
