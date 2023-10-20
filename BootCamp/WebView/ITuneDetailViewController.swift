@@ -35,6 +35,13 @@ class ITuneDetailViewController:UIViewController {
             guard let self = self else { return }
             self.forwardButton.isEnabled = change.newValue ?? false
         }))
+        
+        obs.append(webView.observe(\.isLoading, options: [.new], changeHandler: { [weak self] (_,change) in
+            guard let self = self ,
+                let status = change.newValue else { return }
+            if ( status ) { self.loading(isLoading: &self.IsLoading)}
+            else { self.removeLoading(isLoading: &self.IsLoading)}
+        }))
         return webView
     }()
     let backButton = UIButton()
@@ -48,7 +55,7 @@ class ITuneDetailViewController:UIViewController {
         if let url_str = url_string,
            let url = URL(string: url_str) {
             let urlRequest = URLRequest(url: url)
-            loading(isLoading: &IsLoading)
+            //loading(isLoading: &IsLoading)
             webView.load(urlRequest)
         }
         else {
@@ -122,26 +129,25 @@ extension ITuneDetailViewController {
 
 extension ITuneDetailViewController:WKNavigationDelegate {
     func webView(_ webView: WKWebView, didFailProvisionalNavigation navigation: WKNavigation!, withError error: Error) {
-        if error.asAFError?.responseCode == NSURLErrorCancelled { return }
+        if error.asAFError?.responseCode == NSURLErrorCancelled { return } // -999
+        
         let action = UIAlertAction(title: "確認", style: .default) { [weak self] _ in
             guard let self = self else { return }
             self.leftButtonAction() // 返回上一頁
         }
         
-        showAlert(alertText: "錯誤", alertMessage: "載入頁面失敗", alertAction: (webView.canGoBack) ? nil : action)
-        removeLoading(isLoading: &self.IsLoading)
+        let scription = error.localizedDescription
         
-        print(error.localizedDescription)
+        showAlert(alertText: "錯誤", alertMessage: scription, alertAction: (webView.canGoBack) ? nil : action)
+        print(error.asAFError?.responseCode)
     }
     
     func webView(_ webView: WKWebView, didStartProvisionalNavigation navigation: WKNavigation!) {
         print("start load")
-        loading(isLoading: &IsLoading)
     }
     
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
         print("load finish")
-        removeLoading(isLoading: &IsLoading)
     }
     
     func webView(_ webView: WKWebView, createWebViewWith configuration: WKWebViewConfiguration, for navigationAction: WKNavigationAction, windowFeatures: WKWindowFeatures) -> WKWebView? {
@@ -167,16 +173,17 @@ extension ITuneDetailViewController:WKNavigationDelegate {
     func webView(_ webView: WKWebView, decidePolicyFor navigationResponse: WKNavigationResponse, decisionHandler: @escaping (WKNavigationResponsePolicy) -> Void) {
         if navigationResponse.canShowMIMEType {
             decisionHandler(.allow)
-            forwardButton.isEnabled = webView.canGoForward
-            backButton.isEnabled = webView.canGoBack
         }
     }
     
     func webView(_ webView: WKWebView, didReceive challenge: URLAuthenticationChallenge, completionHandler: @escaping (URLSession.AuthChallengeDisposition, URLCredential?) -> Void) {
         // 一律信任網站 ( 可能要有憑證做檢查 )
-        let cred = URLCredential(trust: challenge.protectionSpace.serverTrust!)
-        DispatchQueue.global(qos: .background).async {
-            completionHandler(.useCredential, cred)
+        guard let serverTrust = challenge.protectionSpace.serverTrust else {
+            completionHandler(.cancelAuthenticationChallenge, nil)
+            return
         }
+        let exceptions = SecTrustCopyExceptions(serverTrust)
+        SecTrustSetExceptions(serverTrust, exceptions)
+        completionHandler(.useCredential, URLCredential(trust: serverTrust));
     }
 }
