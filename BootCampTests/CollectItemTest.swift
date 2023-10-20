@@ -46,6 +46,21 @@ final class CollectItemTest: XCTestCase {
         }
     }
     
+    override func tearDown() {
+        presenter.update(type: .電影)
+        for data in presenter.myCollectDatas {
+            if let type = MediaType(rawValue: data.type) {
+                userData.removeData(type:type , trackId: data.trackId)
+            }
+        }
+        presenter.update(type: .音樂)
+        for data in presenter.myCollectDatas {
+            if let type = MediaType(rawValue: data.type) {
+                userData.removeData(type:type , trackId: data.trackId)
+            }
+        }
+    }
+    
     // 測試切換電影與音樂 取得資料是否異常
     func testGetData() {
         presenter.update(type:.電影)
